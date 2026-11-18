@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>AI Virtual Bank</title>
 <style>
 body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
@@ -37,7 +38,15 @@ button{width:95%;padding:12px;background:#22c55e;border:none;border-radius:8px;f
 </div>
 
 <div class="box">
-<b>Recent Transactions</b>
+<b>Recent Transactions</b> 
+  <div style="background:white; padding:15px; border-radius:12px; margin-top:15px;">
+  <h3>Spending Breakdown</h3>
+  <canvas id="myChart"></canvas>
+</div>
+  <div style="background:white; padding:15px; border-radius:12px; margin-top:15px;">
+  <h3>Spending Breakdown</h3>
+  <canvas id="myChart"></canvas>
+</div>
 <p>✅ + ₦50,000 - Salary - Safe</p>
 <p>✅ - ₦5,000 - Airtime - Safe</p>
 <p>⚠️ - ₦180,000 - Unknown Location - Flagged by AI</p>
@@ -61,3 +70,29 @@ function send(){
   // AI Fraud Logic
   if(amt > 100000){
     document.getElementById
+    <script>
+const ctx = document.getElementById('myChart');
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Food', 'Transport', 'Shopping', 'Bills'],
+    datasets: [{
+      data: [12000, 8000, 15000, 10000],
+      backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#F44336']
+    }]
+  }
+});
+</script>
+<script>
+const ctx = document.getElementById('myChart');
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Food', 'Transport', 'Shopping', 'Bills'],
+    datasets: [{
+      data: [12000, 8000, 15000, 10000],
+      backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#F44336']
+    }]
+  }
+});
+</script>
