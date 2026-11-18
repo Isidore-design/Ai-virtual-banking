@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Virtual Bank</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
+.card{background:#1e293b;padding:20px;border-radius:15px;max-width:400px;margin:auto}
+input{width:90%;padding:12px;margin:8px;border-radius:8px;border:none}
+button{width:95%;padding:12px;background:#22c55e;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
+.alert{background:#ef4444;padding:10px;border-radius:8px;margin-top:10px;display:none}
+.box{background:#334155;padding:12px;border-radius:10px;margin:10px;text-align:left}
+</style>
+</head>
+<body>
+
+<div class="card" id="loginPage">
+<h2>🏦 AI Virtual Bank</h2>
+<p>Secure Banking Monitored By AI</p>
+<input placeholder="Username" id="user">
+<input type="password" placeholder="Password" id="pass">
+<button onclick="login()">Login</button>
+<p style="font-size:12px">Demo: any username / password works</p>
+</div>
+
+<div class="card" id="dashPage" style="display:none">
+<h2>Welcome, <span id="name"></span></h2>
+<h1>₦ 250,000.00</h1>
+<p>Account: 0123456789 | AI Status: ✅ Active</p>
+
+<div class="box">
+<b>Send Money</b><br><br>
+<input placeholder="Receiver Account" id="to">
+<input placeholder="Amount" id="amt" type="number">
+<button onclick="send()">Send Money</button>
+<div class="alert" id="fraudAlert">⚠️ AI ALERT: Suspicious Transaction Detected! Transaction Blocked.</div>
+<p id="success" style="color:#22c55e"></p>
+</div>
+
+<div class="box">
+<b>Recent Transactions</b>
+<p>✅ + ₦50,000 - Salary - Safe</p>
+<p>✅ - ₦5,000 - Airtime - Safe</p>
+<p>⚠️ - ₦180,000 - Unknown Location - Flagged by AI</p>
+</div>
+
+<button onclick="logout()" style="background:#ef4444">Logout</button>
+</div>
+
+<script>
+function login(){
+  let u = document.getElementById("user").value;
+  if(u==""){alert("Enter username");return;}
+  document.getElementById("name").innerText = u;
+  document.getElementById("loginPage").style.display="none";
+  document.getElementById("dashPage").style.display="block";
+}
+function send(){
+  let amt = document.getElementById("amt").value;
+  let to = document.getElementById("to").value;
+  if(amt=="" || to==""){alert("Fill all fields");return;}
+  // AI Fraud Logic
+  if(amt > 100000){
+    document.getElementById
