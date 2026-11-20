@@ -62,7 +62,14 @@ h3{margin-top:0}
 </div>
 
 <div class="card">
-<h3>📋 Recent Activity</h3>
+<h3>💸 Send Money</h3>
+<input type="text" id="sendTo" placeholder="Send to - e.g John, Ada, Mum">
+<input type="number" id="sendAmount" placeholder="Amount - e.g 500">
+<input type="text" id="sendNote" placeholder="Note - e.g For food (optional)">
+<button onclick="sendMoney()">Send Money</button>
+<p id="sendMsg" class="success"></p>
+<p style="font-size:13px;color:#666;text-align:center">Instant transfer • No fees • AI Protected</p>
+</div>
 <p id="activity">✅ Salary Received - $2,500<br>✅ AI blocked suspicious login<br>✅ Transfer to John - $200</p>
 </div>
 
@@ -87,8 +94,34 @@ function bookFlight(){
   if(!from || !to || !date){ alert("Please fill From, To and Date"); return; }
   document.getElementById("flightMsg").innerText = "✅ Flight booked! " + from + " to " + to + " on " + date + " - Booking Ref: FL" + Math.floor(Math.random()*99999);
   document.getElementById("activity").innerHTML += "<br>✈️ Flight " + from + " to " + to;
+}function sendMoney(){
+  var to = document.getElementById("sendTo").value;
+  var amount = parseFloat(document.getElementById("sendAmount").value);
+  var note = document.getElementById("sendNote").value;
+  if(!to || !amount){ alert("Please enter who to send to and amount"); return; }
+  if(amount > balance){ alert("Not enough balance!"); return; }
+  balance -= amount;
+  updateBalance();
+  document.getElementById("sendMsg").innerText = "✅ Sent $" + amount + " to " + to + "! Ref: TR" + Math.floor(Math.random()*999999);
+  document.getElementById("activity").innerHTML += "<br>💸 Sent $" + amount + " to " + to + (note ? " - " + note : "");
+  document.getElementById("sendTo").value = "";
+  document.getElementById("sendAmount").value = "";
+  document.getElementById("sendNote").value = "";
 }
-function bookTrain(){
+function bookTrain(){ function sendMoney(){
+  var to = document.getElementById("sendTo").value;
+  var amount = parseFloat(document.getElementById("sendAmount").value);
+  var note = document.getElementById("sendNote").value;
+  if(!to || !amount){ alert("Please enter who to send to and amount"); return; }
+  if(amount > balance){ alert("Not enough balance!"); return; }
+  balance -= amount;
+  updateBalance();
+  document.getElementById("sendMsg").innerText = "✅ Sent $" + amount + " to " + to + "! Ref: TR" + Math.floor(Math.random()*999999);
+  document.getElementById("activity").innerHTML += "<br>💸 Sent $" + amount + " to " + to + (note ? " - " + note : "");
+  document.getElementById("sendTo").value = "";
+  document.getElementById("sendAmount").value = "";
+  document.getElementById("sendNote").value = "";
+}
   var from = document.getElementById("fromTrain").value;
   var to = document.getElementById("toTrain").value;
   var date = document.getElementById("trainDate").value;
