@@ -5,29 +5,97 @@
 <title>Dashboard - AI Virtual Bank</title>
 <style>
 body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
-.card{background:white;color:black;border-radius:15px;padding:20px;margin:15px auto;max-width:400px}
-.balance{font-size:32px;font-weight:bold;color:#16a34a}
-button{background:#16a34a;color:white;border:none;padding:12px 20px;border-radius:10px;font-size:16px;width:100%;margin-top:10px}
+.card{background:white;color:black;border-radius:15px;padding:20px;margin:15px auto;max-width:450px;text-align:left}
+.balance{font-size:32px;font-weight:bold;color:#16a34a;text-align:center}
+button{background:#16a34a;color:white;border:none;padding:12px;border-radius:10px;font-size:16px;width:100%;margin-top:10px;cursor:pointer}
+input,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:10px;box-sizing:border-box}
+.gift{display:flex;justify-content:space-between;background:#f1f5f9;padding:12px;border-radius:10px;margin:8px 0}
+.success{color:green;font-weight:bold;text-align:center}
+h3{margin-top:0}
 </style>
 </head>
 <body>
 <h2>Welcome back, Demo User 👋</h2>
 <p>Secure Banking Monitored By AI</p>
 
-<div class="card">
+<div class="card" style="text-align:center">
 <p>Total Balance</p>
-<div class="balance">$12,450.00</div>
+<div class="balance" id="balance">$12,450.00</div>
 <p>Account: **** 4821</p>
 </div>
 
 <div class="card">
-<p><b>Recent Activity</b></p>
-<p>✅ Salary Received - $2,500</p>
-<p>✅ AI blocked suspicious login</p>
-<p>✅ Transfer to John - $200</p>
+<h3>🎁 Gift Cards</h3>
+<p>Buy gift cards with your balance</p>
+<div class="gift"><span>Amazon - $25</span><button style="width:auto" onclick="buyGift('Amazon $25',25)">Buy</button></div>
+<div class="gift"><span>Netflix - $15</span><button style="width:auto" onclick="buyGift('Netflix $15',15)">Buy</button></div>
+<div class="gift"><span>Steam - $50</span><button style="width:auto" onclick="buyGift('Steam $50',50)">Buy</button></div>
+<div class="gift"><span>Apple - $100</span><button style="width:auto" onclick="buyGift('Apple $100',100)">Buy</button></div>
+<p id="giftMsg" class="success"></p>
 </div>
 
-<button onclick="window.location.href='index.html'">Logout</button>
+<div class="card">
+<h3>✈️ Flight Booking</h3>
+<input type="text" id="fromFlight" placeholder="From - e.g Lagos">
+<input type="text" id="toFlight" placeholder="To - e.g Abuja">
+<input type="date" id="flightDate">
+<select id="flightClass">
+<option>Economy - $150</option>
+<option>Business - $350</option>
+<option>First Class - $600</option>
+</select>
+<button onclick="bookFlight()">Book Flight</button>
+<p id="flightMsg" class="success"></p>
+</div>
 
+<div class="card">
+<h3>🚆 Train Booking</h3>
+<input type="text" id="fromTrain" placeholder="From - e.g Lagos">
+<input type="text" id="toTrain" placeholder="To - e.g Ibadan">
+<input type="date" id="trainDate">
+<select id="trainClass">
+<option>Standard - $20</option>
+<option>First Class - $45</option>
+</select>
+<button onclick="bookTrain()">Book Train</button>
+<p id="trainMsg" class="success"></p>
+</div>
+
+<div class="card">
+<h3>📋 Recent Activity</h3>
+<p id="activity">✅ Salary Received - $2,500<br>✅ AI blocked suspicious login<br>✅ Transfer to John - $200</p>
+</div>
+
+<button onclick="window.location.href='index.html'" style="max-width:450px">Logout</button>
+
+<script>
+let balance = 12450;
+function updateBalance(){
+  document.getElementById("balance").innerText = "$" + balance.toLocaleString() + ".00";
+}
+function buyGift(name, price){
+  if(balance < price){ alert("Not enough balance"); return; }
+  balance -= price;
+  updateBalance();
+  document.getElementById("giftMsg").innerText = "✅ You bought " + name + " Gift Card! Code: GIFT-" + Math.floor(Math.random()*999999);
+  document.getElementById("activity").innerHTML += "<br>🎁 Bought " + name + " Gift Card - $" + price;
+}
+function bookFlight(){
+  var from = document.getElementById("fromFlight").value;
+  var to = document.getElementById("toFlight").value;
+  var date = document.getElementById("flightDate").value;
+  if(!from || !to || !date){ alert("Please fill From, To and Date"); return; }
+  document.getElementById("flightMsg").innerText = "✅ Flight booked! " + from + " to " + to + " on " + date + " - Booking Ref: FL" + Math.floor(Math.random()*99999);
+  document.getElementById("activity").innerHTML += "<br>✈️ Flight " + from + " to " + to;
+}
+function bookTrain(){
+  var from = document.getElementById("fromTrain").value;
+  var to = document.getElementById("toTrain").value;
+  var date = document.getElementById("trainDate").value;
+  if(!from || !to || !date){ alert("Please fill From, To and Date"); return; }
+  document.getElementById("trainMsg").innerText = "✅ Train booked! " + from + " to " + to + " on " + date + " - Seat: A" + Math.floor(Math.random()*50);
+  document.getElementById("activity").innerHTML += "<br>🚆 Train " + from + " to " + to;
+}
+</script>
 </body>
 </html>
