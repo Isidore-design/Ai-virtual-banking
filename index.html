@@ -1,110 +1,48 @@
-<root html>
+<!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<title>AI Virtual Bank</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Virtual Bank - Bank, Travel & Gifts</title>
 <style>
-body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
-.card{background:#1e293b;padding:20px;border-radius:15px;max-width:400px;margin:auto}
-input{width:90%;padding:12px;margin:8px;border-radius:8px;border:none}
-button{width:95%;padding:12px;background:#22c55e;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
-.alert{background:#ef4444;padding:10px;border-radius:8px;margin-top:10px;display:none}
-.box{background:#334155;padding:12px;border-radius:10px;margin:10px;text-align:left}
+body{font-family:Arial;margin:0;background:#f0f2ff;color:#222}
+.header{background:linear-gradient(135deg,#6a11cb,#2575fc);color:white;padding:40px 20px;text-align:center}
+.header h1{font-size:32px;margin:0}
+.header p{opacity:0.9}
+.btn{display:inline-block;background:white;color:#2575fc;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:bold;margin-top:15px}
+.features{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:20px}
+.card{background:white;width:160px;padding:20px;border-radius:15px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+.card span{font-size:35px}
+.card h3{margin:10px 0 5px}
+.card p{font-size:13px;color:#666;margin:0}
+.stats{text-align:center;background:white;margin:15px;border-radius:15px;padding:20px}
+.footer{text-align:center;padding:20px;color:#888;font-size:13px}
 </style>
 </head>
 <body>
-
-<div class="card" id="loginPage">
-<h2>🏦 AI Virtual Bank</h2>
-<p>Secure Banking Monitored By AI</p>
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="message"></p>
-<p style="font-size:12px">Demo: any username / password works</p>
+<div class="header">
+<h1>🤖 AI Virtual Bank</h1>
+<p>Banking, Travel & Gifts — All in One Super-App</p>
+<p>✨ Powered by AI • Instant • Secure • No Fees</p>
+<a class="btn" href="dashboard.html">Login & Start →</a>
+<br><small style="opacity:0.8">Demo: demo@bank.com / 123456</small>
 </div>
 
-<div class="card"> <Style="display:none">
-<h2>Welcome, <span id="name"></span></h2>
-<h1>₦ 250,000.00</h1>
-<p>Account: 0123456789 | AI Status: ✅ Active</p>
-
-<div class="box">
-<b>Send Money</b><br><br>
-<input placeholder="Receiver Account" id="to">
-<input placeholder="Amount" id="amt" type="number">
-<button onclick="send()">Send Money</button>
-<div class="alert" id="fraudAlert">⚠️ AI ALERT: Suspicious Transaction Detected! Transaction Blocked.</div>
-<p id="success" style="color:#22c55e"></p>
+<div class="stats">
+<h2>🔥 12,450+ Users Trust Us</h2>
+<p>⭐ 4.9 Rating • 💸 $1M+ Sent • ✈️ 5,000+ Trips Booked</p>
 </div>
 
-<div class="box">
-<b>Recent Transactions</b> 
-  <div style="background:white; padding:15px; border-radius:12px; margin-top:15px;">
-  <h3>Spending Breakdown</h3>
-  <canvas id="myChart"></canvas>
-</div>
-  <div style="background:white; padding:15px; border-radius:12px; margin-top:15px;">
-  <h3>Spending Breakdown</h3>
-  <canvas id="myChart"></canvas>
-</div>
-<p>✅ + ₦50,000 - Salary - Safe</p>
-<p>✅ - ₦5,000 - Airtime - Safe</p>
-<p>⚠️ - ₦180,000 - Unknown Location - Flagged by AI</p>
+<div class="features">
+<div class="card"><span>💸</span><h3>Send Money</h3><p>Send to anyone instantly, no fees</p></div>
+<div class="card"><span>✈️</span><h3>Flights</h3><p>Book Lagos to Abuja in seconds</p></div>
+<div class="card"><span>🚆</span><h3>Trains</h3><p>Lagos to Ibadan, fast & easy</p></div>
+<div class="card"><span>🎁</span><h3>Gift Cards</h3><p>Amazon, Netflix, Spotify & more</p></div>
 </div>
 
-<button onclick="logout()" style="background:#ef4444">Logout</button>
+<div style="text-align:center;padding:10px">
+<a class="btn" style="background:#2575fc;color:white" href="dashboard.html">Get Started Free →</a>
 </div>
 
-<script>
-function login() {
-  var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
-
-  if (email === "demo@bank.com" && password === "123456") {
-    document.getElementById("message").innerText = "Login successful! Welcome.";
-    document.getElementById("message").style.color = "green";
-    // Go to dashboard after 1 second
-    setTimeout(function(){
-      window.location.href = "dashboard.html";
-    }, 1000);
-  } else {
-    document.getElementById("message").innerText = "Wrong email or password. Try demo@bank.com / 123456";
-    document.getElementById("message").style.color = "red";
-  }
-}
-</script>
-function send(){
-  let amt = document.getElementById("amt").value;
-  let to = document.getElementById("to").value;
-  if(amt=="" || to==""){alert("Fill all fields");return;}
-  // AI Fraud Logic
-  if(amt > 100000){
-    document.getElementById
-    <script>
-const ctx = document.getElementById('myChart');
-new Chart(ctx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Food', 'Transport', 'Shopping', 'Bills'],
-    datasets: [{
-      data: [12000, 8000, 15000, 10000],
-      backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#F44336']
-    }]
-  }
-});
-</script>
-<script>
-const ctx = document.getElementById('myChart');
-new Chart(ctx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Food', 'Transport', 'Shopping', 'Bills'],
-    datasets: [{
-      data: [12000, 8000, 15000, 10000],
-      backgroundColor: ['#4CAF50', '#FF9800', '#2196F3', '#F44336']
-    }]
-  }
-});
-</script>
-  
+<div class="footer">© 2026 AI Virtual Bank • Made with ❤️ in Lagos, Nigeria</div>
+</body>
+</html>
