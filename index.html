@@ -17,9 +17,10 @@ button{width:95%;padding:12px;background:#22c55e;border:none;border-radius:8px;f
 <div class="card" id="loginPage">
 <h2>🏦 AI Virtual Bank</h2>
 <p>Secure Banking Monitored By AI</p>
-<input placeholder="Username" id="user">
-<input type="password" placeholder="Password" id="pass">
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
 <button onclick="login()">Login</button>
+<p id="message"></p>
 <p style="font-size:12px">Demo: any username / password works</p>
 </div>
 
@@ -56,13 +57,23 @@ button{width:95%;padding:12px;background:#22c55e;border:none;border-radius:8px;f
 </div>
 
 <script>
-function login(){
-  let u = document.getElementById("user").value;
-  if(u==""){alert("Enter username");return;}
-  document.getElementById("name").innerText = u;
-  document.getElementById("loginPage").style.display="none";
-  document.getElementById("dashPage").style.display="block";
+function login() {
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+
+  if (email === "demo@bank.com" && password === "123456") {
+    document.getElementById("message").innerText = "Login successful! Welcome.";
+    document.getElementById("message").style.color = "green";
+    // Go to dashboard after 1 second
+    setTimeout(function(){
+      window.location.href = "dashboard.html";
+    }, 1000);
+  } else {
+    document.getElementById("message").innerText = "Wrong email or password. Try demo@bank.com / 123456";
+    document.getElementById("message").style.color = "red";
+  }
 }
+</script>
 function send(){
   let amt = document.getElementById("amt").value;
   let to = document.getElementById("to").value;
@@ -96,3 +107,4 @@ new Chart(ctx, {
   }
 });
 </script>
+  
