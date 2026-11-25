@@ -302,6 +302,29 @@ function filterAdmin(){
 }
 loadAdmin();
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://djqkvofoutmjetvcnecv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_MgJza0BQSlcxIzpC0bat-w_jxmdCYE6';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function saveOrderToCloud(order) {
+  const { error } = await supabaseClient.from('orders').insert([{
+    customer_name: order.name || 'Customer',
+    service: order.service || 'Service',
+    amount: order.amount || 0,
+    details: JSON.stringify(order),
+    status: 'pending'
+  }]);
+  if(error) console.log('Cloud save error:', error);
+}
+
+async function loadOrdersFromCloud() {
+  const { data } = await supabaseClient.from('orders').select('*').order('created_at', {ascending: false});
+  if(data) console.log('Orders from cloud:', data);
+  return data || [];
+}
+</script>
 </body>
 </body>
 </html>
