@@ -256,6 +256,34 @@ function buyAirtime(){
   });
 </script>
 </script>
+  <!-- ADMIN DASHBOARD -->
+<div style="margin:20px;padding:15px;background:#0f172a;border-radius:15px;color:white">
+<h2>👑 Admin Dashboard</h2>
+<p>Total Sales: <b id="adminTotal">₦0</b> | Total Orders: <b id="adminCount">0</b></p>
+<input id="adminSearch" placeholder="Search..." onkeyup="filterAdmin()" style="width:100%;padding:10px;border-radius:10px;border:none;margin:10px 0">
+<div id="adminRows" style="font-size:13px">Loading...</div>
+<button onclick="loadAdmin()" style="background:#22c55e;color:white;border:none;padding:10px 20px;border-radius:10px;width:100%;font-weight:bold">🔄 Refresh Admin</button>
+</div>
+<script>
+async function loadAdmin(){
+  try{
+    const {data} = await supabaseClient.from('transactions').select('*').order('created_at',{ascending:false});
+    let total=0; (data||[]).forEach(r=> total+=Number(r.amount||0));
+    document.getElementById('adminTotal').innerText='₦'+total.toLocaleString();
+    document.getElementById('adminCount').innerText=(data||[]).length;
+    window._adminData=data||[];
+    showAdmin(window._adminData);
+  }catch(e){ document.getElementById('adminRows').innerText='Error loading: '+e.message; }
+}
+function showAdmin(list){
+  document.getElementById('adminRows').innerHTML = list.map(r=>`<div style="padding:8px;border-bottom:1px solid #334155">${r.type} - ${r.title} - ₦${r.amount} - ${r.status} - ${new Date(r.created_at).toLocaleString()}</div>`).join('') || 'No data';
+}
+function filterAdmin(){
+  let q=document.getElementById('adminSearch').value.toLowerCase();
+  showAdmin((window._adminData||[]).filter(r=> JSON.stringify(r).toLowerCase().includes(q)));
+}
+loadAdmin();
+</script>
 </body>
 </body>
 </html>
