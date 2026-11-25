@@ -236,7 +236,8 @@ function buyAirtime(){
 <script>
   const SUPABASE_URL = "https://mgklzlddrxjeikjmpaxk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG";
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const supabaseClient = // TEST - remove later
+supabaseClient.from('transactions').insert([{ user_email: 'test@stoneai.com', type: 'test', title: 'Test Connection', amount: 1 }]).then(r => console.log('TEST:', r));;
 
   // Save any transaction for real
   async function saveTransaction(type, title, amount) {
