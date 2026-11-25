@@ -236,28 +236,29 @@ function buyAirtime(){
 <script>
   const SUPABASE_URL = "https://mgklzlddrxjeikjmpaxk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG";
-  const supabaseClient = // TEST - remove later
-supabaseClient.from('transactions').insert([{ user_email: 'test@stoneai.com', type: 'test', title: 'Test Connection', amount: 1 }]).then(r => console.log('TEST:', r));;
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // Save any transaction for real
   async function saveTransaction(type, title, amount) {
-    const { data, error } = await supabaseClient
-      .from('transactions')
-      .insert([{ 
-        user_email: 'demo@stoneai.com',
-        type: type,
-        title: title,
-        amount: amount,
-        status: 'Successful'
-      }]);
+    const { error } = await supabaseClient.from('transactions').insert([{ user_email: 'demo@stoneai.com', type: type, title: title, amount: amount, status: 'Successful' }]);
     if (error) console.log('Save error:', error);
-    else console.log('Saved to Supabase:', data);
+    else console.log('SAVED:', title, amount);
   }
 
-  // Example: Call this inside your Airtime button
-  // saveTransaction('airtime', 'MTN Airtime - 0803...', 1000);
-  // saveTransaction('transfer', 'Transfer to John', 5000);
-  // saveTransaction('flight', 'Lagos to Abuja Flight', 85000);
+  // AUTO-SAVE: Anytime you click any Buy / Send / Pay button, it will save the document automatically.addEventListener('click', function(e) {
+    let btn = e.target.closest('button');
+    if (!btn) return;
+    let text = btn.innerText.toLowerCase();
+    // Find amount from page - look for input with number
+    let inputs = document.querySelectorAll('input');
+    let amount = 100;
+    for (let inp of inputs) { if (inp.value && !isNaN(inp.value)) { amount = Number(inp.value); break; } }
+
+    if (text.includes('airtime')) saveTransaction('airtime', 'Airtime Purchase', amount);
+    else if (text.includes('transfer') || text.includes('send')) saveTransaction('transfer', 'Transfer', amount);
+    else if (text.includes('flight')) saveTransaction('flight', 'Flight Booking', amount);
+    else if (text.includes('buy') || text.includes('pay')) saveTransaction('payment', btn.innerText, amount);
+  });
+</script>
 </script>
 </body>
 </body>
