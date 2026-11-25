@@ -10,12 +10,19 @@ body{font-family:Arial;margin:0;background:#f0f2ff;color:#222}
 .header p{opacity:0.9}
 .btn{display:inline-block;background:white;color:#2575fc;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:bold;margin-top:15px}
 .features{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:20px}
-.card{background:white;width:160px;padding:20px;border-radius:15px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+.card{background:white;width:160px;padding:20px;border-radius:15px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1);cursor:pointer}
 .card span{font-size:35px}
 .card h3{margin:10px 0 5px}
 .card p{font-size:13px;color:#666;margin:0}
 .stats{text-align:center;background:white;margin:15px;border-radius:15px;padding:20px}
 .footer{text-align:center;padding:20px;color:#888;font-size:13px}
+.airtime{background:white;margin:15px;border-radius:15px;padding:20px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+.network-btn,.amount-btn{padding:10px 15px;margin:5px;border:2px solid #ddd;border-radius:20px;background:white;cursor:pointer;font-weight:bold}
+.network-btn.active,.amount-btn.active{background:#2575fc;color:white;border-color:#2575fc}
+input{width:90%;max-width:300px;padding:12px;margin:10px 0;border:2px solid #ddd;border-radius:10px;font-size:16px}
+.buy-btn{background:#2575fc;color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:bold;font-size:16px;cursor:pointer;width:90%;max-width:320px}
+.buy-btn:disabled{background:#ccc}
+#airtimeMsg{margin-top:15px;font-weight:bold}
 </style>
 </head>
 <body>
@@ -34,9 +41,35 @@ body{font-family:Arial;margin:0;background:#f0f2ff;color:#222}
 
 <div class="features">
 <div class="card"><span>💸</span><h3>Send Money</h3><p>Send to anyone instantly, no fees</p></div>
+<div class="card" onclick="document.getElementById('airtimeSection').scrollIntoView({behavior:'smooth'})"><span>📱</span><h3>Airtime</h3><p>Buy MTN, Glo, Airtel, 9mobile — Click to Buy</p></div>
 <div class="card"><span>✈️</span><h3>Flights</h3><p>Book Lagos to Abuja in seconds</p></div>
 <div class="card"><span>🚆</span><h3>Trains</h3><p>Lagos to Ibadan, fast & easy</p></div>
 <div class="card"><span>🎁</span><h3>Gift Cards</h3><p>Amazon, Netflix, Spotify & more</p></div>
+</div>
+
+<div class="airtime" id="airtimeSection">
+<h2>📱 Buy Airtime</h2>
+<p>StoneAI Balance: <b id="balance">₦50,000</b></p>
+<p>Choose Network:</p>
+<div>
+<button class="network-btn active" onclick="selectNetwork(this,'MTN')">MTN</button>
+<button class="network-btn" onclick="selectNetwork(this,'Glo')">Glo</button>
+<button class="network-btn" onclick="selectNetwork(this,'Airtel')">Airtel</button>
+<button class="network-btn" onclick="selectNetwork(this,'9mobile')">9mobile</button>
+</div>
+<br>
+<input type="tel" id="phone" placeholder="Enter phone number e.g. 08031234567" maxlength="11">
+<p>Choose Amount:</p>
+<div>
+<button class="amount-btn" onclick="selectAmount(this,100)">₦100</button>
+<button class="amount-btn" onclick="selectAmount(this,200)">₦200</button>
+<button class="amount-btn active" onclick="selectAmount(this,500)">₦500</button>
+<button class="amount-btn" onclick="selectAmount(this,1000)">₦1,000</button>
+</div>
+<br>
+<button class="buy-btn" onclick="buyAirtime()">Buy Airtime →</button>
+<div id="airtimeMsg"></div>
+<p style="font-size:12px;color:#888">Demo only — no real money moves. It deducts from your demo balance.</p>
 </div>
 
 <div style="text-align:center;padding:10px">
@@ -44,5 +77,159 @@ body{font-family:Arial;margin:0;background:#f0f2ff;color:#222}
 </div>
 
 <div class="footer">© 2026 StoneAI • Made with ❤️ in Lagos, Nigeria</div>
+
+<script>
+let balance = 50000;
+let selectedNetwork = 'MTN';
+let selectedAmount = 500;
+
+function selectNetwork(btn, net){
+  document.querySelectorAll('.network-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedNetwork = net;
+}
+function selectAmount(btn, amt){
+  document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedAmount = amt;
+}
+function buyAirtime(){
+  const phone = document.getElementById('phone').value.trim();
+  const msg = document.getElementById('airtimeMsg');
+  if(phone.length < 10){
+    msg.style.color='red';
+    msg.innerHTML='⚠️ Please enter a valid phone number';
+    return;
+  }
+  if(balance < selectedAmount){
+    msg.style.color='red';
+    msg.innerHTML='❌ Insufficient balance. Top up to continue.';
+    return;
+  }
+  balance -= selectedAmount;
+  document.getElementById('balance').innerText = '₦' + balance.toLocaleString();
+  const txId = 'STN' + Math.floor(Math.random()*900000+100000);
+  msg.style.color='green';
+  msg.innerHTML = `✅ Success! ₦${selectedAmount} ${selectedNetwork} Airtime sent to ${phone}<br>Transaction ID: ${txId}<br>New Balance: ₦${balance.toLocaleString()}`;
+  document.getElementById('phone').value='';
+}
+</script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StoneAI - Bank, Travel & Gifts</title>
+<style>
+body{font-family:Arial;margin:0;background:#f0f2ff;color:#222}
+.header{background:linear-gradient(135deg,#6a11cb,#2575fc);color:white;padding:40px 20px;text-align:center}
+.header h1{font-size:32px;margin:0}
+.header p{opacity:0.9}
+.btn{display:inline-block;background:white;color:#2575fc;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:bold;margin-top:15px}
+.features{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:20px}
+.card{background:white;width:160px;padding:20px;border-radius:15px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1);cursor:pointer}
+.card span{font-size:35px}
+.card h3{margin:10px 0 5px}
+.card p{font-size:13px;color:#666;margin:0}
+.stats{text-align:center;background:white;margin:15px;border-radius:15px;padding:20px}
+.footer{text-align:center;padding:20px;color:#888;font-size:13px}
+.airtime{background:white;margin:15px;border-radius:15px;padding:20px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+.network-btn,.amount-btn{padding:10px 15px;margin:5px;border:2px solid #ddd;border-radius:20px;background:white;cursor:pointer;font-weight:bold}
+.network-btn.active,.amount-btn.active{background:#2575fc;color:white;border-color:#2575fc}
+input{width:90%;max-width:300px;padding:12px;margin:10px 0;border:2px solid #ddd;border-radius:10px;font-size:16px}
+.buy-btn{background:#2575fc;color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:bold;font-size:16px;cursor:pointer;width:90%;max-width:320px}
+.buy-btn:disabled{background:#ccc}
+#airtimeMsg{margin-top:15px;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>🤖 StoneAI</h1>
+<p>Banking, Travel & Gifts — All in One Super-App</p>
+<p>✨ Powered by AI • Instant • Secure • No Fees</p>
+<a class="btn" href="dashboard.html">Login & Start →</a>
+<br><small style="opacity:0.8">Demo: demo@bank.com / 123456</small>
+</div>
+
+<div class="stats">
+<h2>🔥 12,450+ Users Trust Us</h2>
+<p>⭐ 4.9 Rating • 💸 $1M+ Sent • ✈️ 5,000+ Trips Booked</p>
+</div>
+
+<div class="features">
+<div class="card"><span>💸</span><h3>Send Money</h3><p>Send to anyone instantly, no fees</p></div>
+<div class="card" onclick="document.getElementById('airtimeSection').scrollIntoView({behavior:'smooth'})"><span>📱</span><h3>Airtime</h3><p>Buy MTN, Glo, Airtel, 9mobile — Click to Buy</p></div>
+<div class="card"><span>✈️</span><h3>Flights</h3><p>Book Lagos to Abuja in seconds</p></div>
+<div class="card"><span>🚆</span><h3>Trains</h3><p>Lagos to Ibadan, fast & easy</p></div>
+<div class="card"><span>🎁</span><h3>Gift Cards</h3><p>Amazon, Netflix, Spotify & more</p></div>
+</div>
+
+<div class="airtime" id="airtimeSection">
+<h2>📱 Buy Airtime</h2>
+<p>StoneAI Balance: <b id="balance">₦50,000</b></p>
+<p>Choose Network:</p>
+<div>
+<button class="network-btn active" onclick="selectNetwork(this,'MTN')">MTN</button>
+<button class="network-btn" onclick="selectNetwork(this,'Glo')">Glo</button>
+<button class="network-btn" onclick="selectNetwork(this,'Airtel')">Airtel</button>
+<button class="network-btn" onclick="selectNetwork(this,'9mobile')">9mobile</button>
+</div>
+<br>
+<input type="tel" id="phone" placeholder="Enter phone number e.g. 08031234567" maxlength="11">
+<p>Choose Amount:</p>
+<div>
+<button class="amount-btn" onclick="selectAmount(this,100)">₦100</button>
+<button class="amount-btn" onclick="selectAmount(this,200)">₦200</button>
+<button class="amount-btn active" onclick="selectAmount(this,500)">₦500</button>
+<button class="amount-btn" onclick="selectAmount(this,1000)">₦1,000</button>
+</div>
+<br>
+<button class="buy-btn" onclick="buyAirtime()">Buy Airtime →</button>
+<div id="airtimeMsg"></div>
+<p style="font-size:12px;color:#888">Demo only — no real money moves. It deducts from your demo balance.</p>
+</div>
+
+<div style="text-align:center;padding:10px">
+<a class="btn" style="background:#2575fc;color:white" href="dashboard.html">Get Started Free →</a>
+</div>
+
+<div class="footer">© 2026 StoneAI • Made with ❤️ in Lagos, Nigeria</div>
+
+<script>
+let balance = 50000;
+let selectedNetwork = 'MTN';
+let selectedAmount = 500;
+
+function selectNetwork(btn, net){
+  document.querySelectorAll('.network-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedNetwork = net;
+}
+function selectAmount(btn, amt){
+  document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedAmount = amt;
+}
+function buyAirtime(){
+  const phone = document.getElementById('phone').value.trim();
+  const msg = document.getElementById('airtimeMsg');
+  if(phone.length < 10){
+    msg.style.color='red';
+    msg.innerHTML='⚠️ Please enter a valid phone number';
+    return;
+  }
+  if(balance < selectedAmount){
+    msg.style.color='red';
+    msg.innerHTML='❌ Insufficient balance. Top up to continue.';
+    return;
+  }
+  balance -= selectedAmount;
+  document.getElementById('balance').innerText = '₦' + balance.toLocaleString();
+  const txId = 'STN' + Math.floor(Math.random()*900000+100000);
+  msg.style.color='green';
+  msg.innerHTML = `✅ Success! ₦${selectedAmount} ${selectedNetwork} Airtime sent to ${phone}<br>Transaction ID: ${txId}<br>New Balance: ₦${balance.toLocaleString()}`;
+  document.getElementById('phone').value='';
+}
+</script>
 </body>
 </html>
