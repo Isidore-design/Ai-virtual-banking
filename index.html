@@ -237,13 +237,13 @@ function buyAirtime(){
   const SUPABASE_URL = "https://mgklzlddrxjeikjmpaxk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG";
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  if (error) console.log(error);
+
+  async function saveTransaction(type, title, amount) {
+    await supabaseClient.from('transactions').insert([{ user_email: 'demo@stoneai.com', type: type, title: title, amount: amount, status: 'Successful' }]);
   }
 
-  // Catch ANY click - button, div, link, anything
   document.addEventListener('click', function(e) {
     let text = (e.target.innerText || '').toLowerCase();
-    // Also check parent text
     if (e.target.parentElement) text += ' ' + (e.target.parentElement.innerText || '').toLowerCase();
     
     let inputs = document.querySelectorAll('input');
