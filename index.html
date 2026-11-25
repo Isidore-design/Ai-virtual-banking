@@ -237,18 +237,21 @@ function buyAirtime(){
   const SUPABASE_URL = "https://mgklzlddrxjeikjmpaxk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG";
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  alert('StoneAI Loaded - Code dey work!');
 
   async function saveTransaction(type, title, amount) {
+    alert('Trying to save: ' + title);
     const { error } = await supabaseClient.from('transactions').insert([{ user_email: 'demo@stoneai.com', type: type, title: title, amount: amount, status: 'Successful' }]);
     if (error) alert('SUPABASE ERROR: ' + error.message);
-else alert('SAVED! ' + title + ' ' + amount);
+    else alert('SAVED! Go check Supabase');
   }
 
-  // AUTO-SAVE: Anytime you click any Buy / Send / Pay button, it will save the document automatically.addEventListener('click', function(e) {
-    let btn = e.target.closest('button');
-    if (!btn) return;
-    let text = btn.innerText.toLowerCase();
-    // Find amount from page - look for input with number
+  // Catch ANY click - button, div, link, anything
+  document.addEventListener('click', function(e) {
+    let text = (e.target.innerText || '').toLowerCase();
+    // Also check parent text
+    if (e.target.parentElement) text += ' ' + (e.target.parentElement.innerText || '').toLowerCase();
+    
     let inputs = document.querySelectorAll('input');
     let amount = 100;
     for (let inp of inputs) { if (inp.value && !isNaN(inp.value)) { amount = Number(inp.value); break; } }
@@ -256,7 +259,6 @@ else alert('SAVED! ' + title + ' ' + amount);
     if (text.includes('airtime')) saveTransaction('airtime', 'Airtime Purchase', amount);
     else if (text.includes('transfer') || text.includes('send')) saveTransaction('transfer', 'Transfer', amount);
     else if (text.includes('flight')) saveTransaction('flight', 'Flight Booking', amount);
-    else if (text.includes('buy') || text.includes('pay')) saveTransaction('payment', btn.innerText, amount);
   });
 </script>
 </script>
