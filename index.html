@@ -257,12 +257,30 @@ function buyAirtime(){
 </script>
 </script>
   <!-- ADMIN DASHBOARD -->
-<div style="margin:20px;padding:15px;background:#0f172a;border-radius:15px;color:white">
+  <!-- ADMIN LOCK -->
+<div id="adminLock" style="margin:20px;padding:20px;background:#0f172a;border-radius:15px;color:white;text-align:center">
+<h2>🔒 Admin Login</h2>
+<input id="adminPass" type="password" placeholder="Enter Admin Password" style="width:100%;padding:12px;border-radius:10px;border:none;margin:10px 0">
+<button onclick="unlockAdmin()" style="background:#22c55e;color:white;border:none;padding:12px 20px;border-radius:10px;width:100%;font-weight:bold">Unlock Admin</button>
+<p id="adminError" style="color:#f87171;font-size:13px"></p>
+</div>
+<script>
+function unlockAdmin(){
+  if(document.getElementById('adminPass').value === 'stone123'){
+    document.getElementById('adminLock').style.display='none';
+    document.getElementById('adminBox').style.display='block';
+    loadAdmin();
+  } else {
+    document.getElementById('adminError').innerText='Wrong password! Try again';
+  }
+}
+</script>
+<div id="adminBox" style="display:none;margin:20px;padding:15px;background:#0f172a;border-radius:15px;color:white">
 <h2>👑 Admin Dashboard</h2>
 <p>Total Sales: <b id="adminTotal">₦0</b> | Total Orders: <b id="adminCount">0</b></p>
-<input id="adminSearch" placeholder="Search..." onkeyup="filterAdmin()" style="width:100%;padding:10px;border-radius:10px;border:none;margin:10px 0">
+<input id="adminSearch" placeholder="Search airtime, transfer, flight..." onkeyup="filterAdmin()" style="width:100%;padding:10px;border-radius:10px;border:none;margin:10px 0">
 <div id="adminRows" style="font-size:13px">Loading...</div>
-<button onclick="loadAdmin()" style="background:#22c55e;color:white;border:none;padding:10px 20px;border-radius:10px;width:100%;font-weight:bold">🔄 Refresh Admin</button>
+<button onclick="loadAdmin()" style="background:#22c55e;color:white;border:none;padding:10px 20px;border-radius:10px;width:100%;font-weight:bold;margin-top:10px">🔄 Refresh Admin</button>
 </div>
 <script>
 async function loadAdmin(){
