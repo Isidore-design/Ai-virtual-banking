@@ -240,8 +240,8 @@ function buyAirtime(){
 
   async function saveTransaction(type, title, amount) {
     const { error } = await supabaseClient.from('transactions').insert([{ user_email: 'demo@stoneai.com', type: type, title: title, amount: amount, status: 'Successful' }]);
-    if (error) console.log('Save error:', error);
-    else console.log('SAVED:', title, amount);
+    if (error) alert('SUPABASE ERROR: ' + error.message);
+else alert('SAVED! ' + title + ' ' + amount);
   }
 
   // AUTO-SAVE: Anytime you click any Buy / Send / Pay button, it will save the document automatically.addEventListener('click', function(e) {
