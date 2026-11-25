@@ -2,329 +2,73 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StoneAI - Bank, Travel & Gifts</title>
+<title>Stone Connect</title>
 <style>
-body{font-family:Arial;margin:0;background:#f0f2ff;color:#222}
-.header{background:linear-gradient(135deg,#6a11cb,#2575fc);color:white;padding:40px 20px;text-align:center}
-.header h1{font-size:32px;margin:0}
-.header p{opacity:0.9}
-.btn{display:inline-block;background:white;color:#2575fc;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:bold;margin-top:15px}
-.features{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:20px}
-.card{background:white;width:160px;padding:20px;border-radius:15px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1);cursor:pointer}
-.card span{font-size:35px}
-.card h3{margin:10px 0 5px}
-.card p{font-size:13px;color:#666;margin:0}
-.stats{text-align:center;background:white;margin:15px;border-radius:15px;padding:20px}
-.footer{text-align:center;padding:20px;color:#888;font-size:13px}
-.airtime{background:white;margin:15px;border-radius:15px;padding:20px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-.network-btn,.amount-btn{padding:10px 15px;margin:5px;border:2px solid #ddd;border-radius:20px;background:white;cursor:pointer;font-weight:bold}
-.network-btn.active,.amount-btn.active{background:#2575fc;color:white;border-color:#2575fc}
-input{width:90%;max-width:300px;padding:12px;margin:10px 0;border:2px solid #ddd;border-radius:10px;font-size:16px}
-.buy-btn{background:#2575fc;color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:bold;font-size:16px;cursor:pointer;width:90%;max-width:320px}
-.buy-btn:disabled{background:#ccc}
-#airtimeMsg{margin-top:15px;font-weight:bold}
+body{font-family:Arial;background:#f5f5f5;margin:0;padding:20px}
+.card{background:#fff;padding:20px;border-radius:12px;max-width:450px;margin:auto;box-shadow:0 2px 10px #0001}
+h1{text-align:center}
+.service{border:1px solid #ddd;padding:12px;border-radius:10px;margin:10px 0;cursor:pointer}
+.service.selected{border:2px solid #000;background:#f0f0f0}
+input,button{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #ccc;font-size:16px}
+button{background:#000;color:#fff;border:none;font-weight:bold}
+#msg{text-align:center;color:green}
 </style>
 </head>
 <body>
-<div class="header">
-<h1>🤖 StoneAI</h1>
-<p>Banking, Travel & Gifts — All in One Super-App</p>
-<p>✨ Powered by AI • Instant • Secure • No Fees</p>
-<a class="btn" href="dashboard.html">Login & Start →</a>
-<br><small style="opacity:0.8">Demo: demo@bank.com / 123456</small>
+<div class="card">
+<h1>🪨 Stone Connect</h1>
+<p style="text-align:center">Order stone services - Fast & Reliable</p>
+
+<div class="service selected" onclick="pick('Stone Design',400,this)">Stone Design - <b>₦400</b></div>
+<div class="service" onclick="pick('Stone Delivery',1000,this)">Stone Delivery - <b>₦1000</b></div>
+<div class="service" onclick="pick('Stone Installation',5000,this)">Stone Installation - <b>₦5000</b></div>
+
+<input id="name" placeholder="Your Full Name">
+<input id="phone" placeholder="Your Phone Number">
+<input id="address" placeholder="Your Address / Location">
+
+<button onclick="placeOrder()">Place Order</button>
+<p id="msg"></p>
+<p style="text-align:center;font-size:12px">Your order is saved securely. We will contact you.</p>
 </div>
 
-<div class="stats">
-<h2>🔥 12,450+ Users Trust Us</h2>
-<p>⭐ 4.9 Rating • 💸 $1M+ Sent • ✈️ 5,000+ Trips Booked</p>
-</div>
-
-<div class="features">
-<div class="card"><span>💸</span><h3>Send Money</h3><p>Send to anyone instantly, no fees</p></div>
-<div class="card" onclick="document.getElementById('airtimeSection').scrollIntoView({behavior:'smooth'})"><span>📱</span><h3>Airtime</h3><p>Buy MTN, Glo, Airtel, 9mobile — Click to Buy</p></div>
-<div class="card"><span>✈️</span><h3>Flights</h3><p>Book Lagos to Abuja in seconds</p></div>
-<div class="card"><span>🚆</span><h3>Trains</h3><p>Lagos to Ibadan, fast & easy</p></div>
-<div class="card"><span>🎁</span><h3>Gift Cards</h3><p>Amazon, Netflix, Spotify & more</p></div>
-</div>
-
-<div class="airtime" id="airtimeSection">
-<h2>📱 Buy Airtime</h2>
-<p>StoneAI Balance: <b id="balance">₦50,000</b></p>
-<p>Choose Network:</p>
-<div>
-<button class="network-btn active" onclick="selectNetwork(this,'MTN')">MTN</button>
-<button class="network-btn" onclick="selectNetwork(this,'Glo')">Glo</button>
-<button class="network-btn" onclick="selectNetwork(this,'Airtel')">Airtel</button>
-<button class="network-btn" onclick="selectNetwork(this,'9mobile')">9mobile</button>
-</div>
-<br>
-<input type="tel" id="phone" placeholder="Enter phone number e.g. 08031234567" maxlength="11">
-<p>Choose Amount:</p>
-<div>
-<button class="amount-btn" onclick="selectAmount(this,100)">₦100</button>
-<button class="amount-btn" onclick="selectAmount(this,200)">₦200</button>
-<button class="amount-btn active" onclick="selectAmount(this,500)">₦500</button>
-<button class="amount-btn" onclick="selectAmount(this,1000)">₦1,000</button>
-</div>
-<br>
-<button class="buy-btn" onclick="buyAirtime()">Buy Airtime →</button>
-<div id="airtimeMsg"></div>
-<p style="font-size:12px;color:#888">Demo only — no real money moves. It deducts from your demo balance.</p>
-</div>
-
-<div style="text-align:center;padding:10px">
-<a class="btn" style="background:#2575fc;color:white" href="dashboard.html">Get Started Free →</a>
-</div>
-
-<div class="footer">© 2026 StoneAI • Made with ❤️ in Lagos, Nigeria</div>
-
-<script>
-let balance = 50000;
-let selectedNetwork = 'MTN';
-let selectedAmount = 500;
-
-function selectNetwork(btn, net){
-  document.querySelectorAll('.network-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedNetwork = net;
-}
-function selectAmount(btn, amt){
-  document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedAmount = amt;
-}
-function buyAirtime(){
-  const phone = document.getElementById('phone').value.trim();
-  const msg = document.getElementById('airtimeMsg');
-  if(phone.length < 10){
-    msg.style.color='red';
-    msg.innerHTML='⚠️ Please enter a valid phone number';
-    return;
-  }
-  if(balance < selectedAmount){
-    msg.style.color='red';
-    msg.innerHTML='❌ Insufficient balance. Top up to continue.';
-    return;
-  }
-  balance -= selectedAmount;
-  document.getElementById('balance').innerText = '₦' + balance.toLocaleString();
-  const txId = 'STN' + Math.floor(Math.random()*900000+100000);
-  msg.style.color='green';
-  msg.innerHTML = `✅ Success! ₦${selectedAmount} ${selectedNetwork} Airtime sent to ${phone}<br>Transaction ID: ${txId}<br>New Balance: ₦${balance.toLocaleString()}`;
-  document.getElementById('phone').value='';
-}
-</script>
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StoneAI - Bank, Travel & Gifts</title>
-<style>
-body{font-family:Arial;margin:0;background:#f0f2ff;color:#222}
-.header{background:linear-gradient(135deg,#6a11cb,#2575fc);color:white;padding:40px 20px;text-align:center}
-.header h1{font-size:32px;margin:0}
-.header p{opacity:0.9}
-.btn{display:inline-block;background:white;color:#2575fc;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:bold;margin-top:15px}
-.features{display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:20px}
-.card{background:white;width:160px;padding:20px;border-radius:15px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1);cursor:pointer}
-.card span{font-size:35px}
-.card h3{margin:10px 0 5px}
-.card p{font-size:13px;color:#666;margin:0}
-.stats{text-align:center;background:white;margin:15px;border-radius:15px;padding:20px}
-.footer{text-align:center;padding:20px;color:#888;font-size:13px}
-.airtime{background:white;margin:15px;border-radius:15px;padding:20px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
-.network-btn,.amount-btn{padding:10px 15px;margin:5px;border:2px solid #ddd;border-radius:20px;background:white;cursor:pointer;font-weight:bold}
-.network-btn.active,.amount-btn.active{background:#2575fc;color:white;border-color:#2575fc}
-input{width:90%;max-width:300px;padding:12px;margin:10px 0;border:2px solid #ddd;border-radius:10px;font-size:16px}
-.buy-btn{background:#2575fc;color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:bold;font-size:16px;cursor:pointer;width:90%;max-width:320px}
-.buy-btn:disabled{background:#ccc}
-#airtimeMsg{margin-top:15px;font-weight:bold}
-</style>
-</head>
-<body>
-<div class="header">
-<h1>🤖 StoneAI</h1>
-<p>Banking, Travel & Gifts — All in One Super-App</p>
-<p>✨ Powered by AI • Instant • Secure • No Fees</p>
-<a class="btn" href="dashboard.html">Login & Start →</a>
-<br><small style="opacity:0.8">Demo: demo@bank.com / 123456</small>
-</div>
-
-<div class="stats">
-<h2>🔥 12,450+ Users Trust Us</h2>
-<p>⭐ 4.9 Rating • 💸 $1M+ Sent • ✈️ 5,000+ Trips Booked</p>
-</div>
-
-<div class="features">
-<div class="card"><span>💸</span><h3>Send Money</h3><p>Send to anyone instantly, no fees</p></div>
-<div class="card" onclick="document.getElementById('airtimeSection').scrollIntoView({behavior:'smooth'})"><span>📱</span><h3>Airtime</h3><p>Buy MTN, Glo, Airtel, 9mobile — Click to Buy</p></div>
-<div class="card"><span>✈️</span><h3>Flights</h3><p>Book Lagos to Abuja in seconds</p></div>
-<div class="card"><span>🚆</span><h3>Trains</h3><p>Lagos to Ibadan, fast & easy</p></div>
-<div class="card"><span>🎁</span><h3>Gift Cards</h3><p>Amazon, Netflix, Spotify & more</p></div>
-</div>
-
-<div class="airtime" id="airtimeSection">
-<h2>📱 Buy Airtime</h2>
-<p>StoneAI Balance: <b id="balance">₦50,000</b></p>
-<p>Choose Network:</p>
-<div>
-<button class="network-btn active" onclick="selectNetwork(this,'MTN')">MTN</button>
-<button class="network-btn" onclick="selectNetwork(this,'Glo')">Glo</button>
-<button class="network-btn" onclick="selectNetwork(this,'Airtel')">Airtel</button>
-<button class="network-btn" onclick="selectNetwork(this,'9mobile')">9mobile</button>
-</div>
-<br>
-<input type="tel" id="phone" placeholder="Enter phone number e.g. 08031234567" maxlength="11">
-<p>Choose Amount:</p>
-<div>
-<button class="amount-btn" onclick="selectAmount(this,100)">₦100</button>
-<button class="amount-btn" onclick="selectAmount(this,200)">₦200</button>
-<button class="amount-btn active" onclick="selectAmount(this,500)">₦500</button>
-<button class="amount-btn" onclick="selectAmount(this,1000)">₦1,000</button>
-</div>
-<br>
-<button class="buy-btn" onclick="buyAirtime()">Buy Airtime →</button>
-<div id="airtimeMsg"></div>
-<p style="font-size:12px;color:#888">Demo only — no real money moves. It deducts from your demo balance.</p>
-</div>
-
-<div style="text-align:center;padding:10px">
-<a class="btn" style="background:#2575fc;color:white" href="dashboard.html">Get Started Free →</a>
-</div>
-
-<div class="footer">© 2026 StoneAI • Made with ❤️ in Lagos, Nigeria</div>
-
-<script>
-let balance = 50000;
-let selectedNetwork = 'MTN';
-let selectedAmount = 500;
-
-function selectNetwork(btn, net){
-  document.querySelectorAll('.network-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedNetwork = net;
-}
-function selectAmount(btn, amt){
-  document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  selectedAmount = amt;
-}
-function buyAirtime(){
-  const phone = document.getElementById('phone').value.trim();
-  const msg = document.getElementById('airtimeMsg');
-  if(phone.length < 10){
-    msg.style.color='red';
-    msg.innerHTML='⚠️ Please enter a valid phone number';
-    return;
-  }
-  if(balance < selectedAmount){
-    msg.style.color='red';
-    msg.innerHTML='❌ Insufficient balance. Top up to continue.';
-    return;
-  }
-  balance -= selectedAmount;
-  document.getElementById('balance').innerText = '₦' + balance.toLocaleString();
-  const txId = 'STN' + Math.floor(Math.random()*900000+100000);
-  msg.style.color='green';
-  msg.innerHTML = `✅ Success! ₦${selectedAmount} ${selectedNetwork} Airtime sent to ${phone}<br>Transaction ID: ${txId}<br>New Balance: ₦${balance.toLocaleString()}`;
-  document.getElementById('phone').value='';
-}
-</script>
-  <!-- StoneAI Supabase Connection -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://mgklzlddrxjeikjmpaxk.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG";
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  async function saveTransaction(type, title, amount) {
-    await supabaseClient.from('transactions').insert([{ user_email: 'demo@stoneai.com', type: type, title: title, amount: amount, status: 'Successful' }]);
-  }
-
-  document.addEventListener('click', function(e) {
-    let text = (e.target.innerText || '').toLowerCase();
-    if (e.target.parentElement) text += ' ' + (e.target.parentElement.innerText || '').toLowerCase();
-    
-    let inputs = document.querySelectorAll('input');
-    let amount = 100;
-    for (let inp of inputs) { if (inp.value && !isNaN(inp.value)) { amount = Number(inp.value); break; } }
-
-    if (text.includes('airtime')) saveTransaction('airtime', 'Airtime Purchase', amount);
-    else if (text.includes('transfer') || text.includes('send')) saveTransaction('transfer', 'Transfer', amount);
-    else if (text.includes('flight')) saveTransaction('flight', 'Flight Booking', amount);
-  });
-</script>
-</script>
-  <!-- ADMIN DASHBOARD -->
-  <!-- ADMIN LOCK -->
-<div id="adminLock" style="margin:20px;padding:20px;background:#0f172a;border-radius:15px;color:white;text-align:center">
-<h2>🔒 Admin Login</h2>
-<input id="adminPass" type="password" placeholder="Enter Admin Password" style="width:100%;padding:12px;border-radius:10px;border:none;margin:10px 0">
-<button onclick="unlockAdmin()" style="background:#22c55e;color:white;border:none;padding:12px 20px;border-radius:10px;width:100%;font-weight:bold">Unlock Admin</button>
-<p id="adminError" style="color:#f87171;font-size:13px"></p>
-</div>
-<script>
-function unlockAdmin(){
-  if(document.getElementById('adminPass').value === 'chocosmitH01'){
-    document.getElementById('adminLock').style.display='none';
-    document.getElementById('adminBox').style.display='block';
-    loadAdmin();
-  } else {
-    document.getElementById('adminError').innerText='Wrong password! Try again';
-  }
-}
-</script>
-<div id="adminBox" style="display:none;margin:20px;padding:15px;background:#0f172a;border-radius:15px;color:white">
-<h2>👑 Admin Dashboard</h2>
-<p>Total Sales: <b id="adminTotal">₦0</b> | Total Orders: <b id="adminCount">0</b></p>
-<input id="adminSearch" placeholder="Search airtime, transfer, flight..." onkeyup="filterAdmin()" style="width:100%;padding:10px;border-radius:10px;border:none;margin:10px 0">
-<div id="adminRows" style="font-size:13px">Loading...</div>
-<button onclick="loadAdmin()" style="background:#22c55e;color:white;border:none;padding:10px 20px;border-radius:10px;width:100%;font-weight:bold;margin-top:10px">🔄 Refresh Admin</button>
-</div>
-<script>
-async function loadAdmin(){
-  try{
-    const {data} = await supabaseClient.from('transactions').select('*').order('created_at',{ascending:false});
-    let total=0; (data||[]).forEach(r=> total+=Number(r.amount||0));
-    document.getElementById('adminTotal').innerText='₦'+total.toLocaleString();
-    document.getElementById('adminCount').innerText=(data||[]).length;
-    window._adminData=data||[];
-    showAdmin(window._adminData);
-  }catch(e){ document.getElementById('adminRows').innerText='Error loading: '+e.message; }
-}
-function showAdmin(list){
-  document.getElementById('adminRows').innerHTML = list.map(r=>`<div style="padding:8px;border-bottom:1px solid #334155">${r.type} - ${r.title} - ₦${r.amount} - ${r.status} - ${new Date(r.created_at).toLocaleString()}</div>`).join('') || 'No data';
-}
-function filterAdmin(){
-  let q=document.getElementById('adminSearch').value.toLowerCase();
-  showAdmin((window._adminData||[]).filter(r=> JSON.stringify(r).toLowerCase().includes(q)));
-}
-loadAdmin();
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = 'https://djqkvofoutmjetvcnecv.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_MgJza0BQSlcxIzpC0bat-w_jxmdCYE6';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-async function saveOrderToCloud(order) {
-  const { error } = await supabaseClient.from('orders').insert([{
-    customer_name: order.name || 'Customer',
-    service: order.service || 'Service',
-    amount: order.amount || 0,
-    details: JSON.stringify(order),
-    status: 'pending'
-  }]);
-  if(error) console.log('Cloud save error:', error);
+let selectedService = 'Stone Design';
+let selectedAmount = 400;
+
+function pick(service, amount, el){
+  selectedService = service; selectedAmount = amount;
+  document.querySelectorAll('.service').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
 }
 
-async function loadOrdersFromCloud() {
-  const { data } = await supabaseClient.from('orders').select('*').order('created_at', {ascending: false});
-  if(data) console.log('Orders from cloud:', data);
-  return data || [];
+async function placeOrder(){
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const address = document.getElementById('address').value;
+  if(!name || !phone){ alert('Please enter name and phone'); return; }
+
+  document.getElementById('msg').innerText = 'Saving order...';
+
+  const { error } = await supabaseClient.from('orders').insert([{
+    customer_name: name,
+    service: selectedService,
+    amount: selectedAmount,
+    details: JSON.stringify({phone, address}),
+    status: 'pending'
+  }]);
+
+  if(error){ document.getElementById('msg').innerText = 'Error: ' + error.message; }
+  else{
+    document.getElementById('msg').innerText = '✅ Order Saved! We will contact you soon.';
+    document.getElementById('name').value=''; document.getElementById('phone').value=''; document.getElementById('address').value='';
+  }
 }
 </script>
-</body>
 </body>
 </html>
