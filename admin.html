@@ -1,56 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StoneAI Admin</title>
-<style>
-body{font-family:Arial;background:#0f172a;color:white;padding:15px;margin:0}
-h1{font-size:22px} h2{font-size:16px;color:#94a3b8}
-.cards{display:flex;gap:10px;margin:15px 0}
-.card{background:#1e293b;padding:15px;border-radius:12px;flex:1;text-align:center}
-.card b{font-size:22px;color:#22c55e;display:block}
-input{width:100%;padding:12px;border-radius:10px;border:none;margin:10px 0;box-sizing:border-box}
-table{width:100%;border-collapse:collapse;background:#1e293b;border-radius:12px;overflow:hidden;font-size:13px}
-th,td{padding:10px;text-align:left;border-bottom:1px solid #334155}
-th{color:#94a3b8}
-.refresh{background:#22c55e;color:white;border:none;padding:12px 20px;border-radius:10px;width:100%;font-weight:bold;margin-top:10px}
-</style>
-</head>
-<body>
-<h1>👑 StoneAI Admin</h1>
-<h2>All Transactions</h2>
-<div class="cards">
-<div class="card">Total Sales<b id="total">₦0</b></div>
-<div class="card">Total Orders<b id="count">0</b></div>
-</div>
-<input id="search" placeholder="Search Airtime, Transfer, email..." onkeyup="filterTable()">
-<table>
-<thead><tr><th>Type</th><th>Title</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
-<tbody id="rows"><tr><td colspan="5">Loading...</td></tr></tbody>
-</table>
-<button class="refresh" onclick="loadData()">🔄 Refresh</button>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const client = supabase.createClient("https://mgklzlddrxjeikjmpaxk.supabase.co","sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG");
-let allData=[];
-async function loadData(){
-  const {data} = await client.from('transactions').select('*').order('created_at',{ascending:false});
-  allData=data||[];
-  let total=0;
-  allData.forEach(r=> total+=Number(r.amount||0));
-  document.getElementById('total').innerText='₦'+total.toLocaleString();
-  document.getElementById('count').innerText=allData.length;
-  show(allData);
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stone Connect Admin</title>
+<style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}td,th{border:1px solid #ddd;padding:10px;text-align:left}</style></head>
+<body><h2>Stone Connect - All Orders</h2><button onclick="loadOrders()">Refresh</button><div id="list">Loading...</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+const c = supabase.createClient('https://djqkvofoutmjetvcnecv.supabase.co','sb_publishable_MgJza0BQSlcxIzpC0bat-w_jxmdCYE6');
+async function loadOrders(){
+  const {data} = await c.from('orders').select('*').order('created_at',{ascending:false});
+  let h='<table><tr><th>Name</th><th>Service</th><th>Amount</th><th>Details</th><th>Date</th></tr>';
+  data.forEach(o=>{ h+=`<tr><td>${o.customer_name}</td><td>${o.service}</td><td>₦${o.amount}</td><td>${o.details}</td><td>${new Date(o.created_at).toLocaleString()}</td></tr>` });
+  document.getElementById('list').innerHTML=h+'</table>';
 }
-function show(list){
-  document.getElementById('rows').innerHTML = list.map(r=>`<tr><td>${r.type}</td><td>${r.title}</td><td>₦${r.amount}</td><td>${r.status}</td><td>${new Date(r.created_at).toLocaleString()}</td></tr>`).join('') || '<tr><td colspan="5">No data</td></tr>';
-}
-function filterTable(){
-  let q=document.getElementById('search').value.toLowerCase();
-  show(allData.filter(r=> JSON.stringify(r).toLowerCase().includes(q)));
-}
-loadData();
-</script>
-</body>
-</html>
+loadOrders();
+</script></body></html>
