@@ -237,13 +237,7 @@ function buyAirtime(){
   const SUPABASE_URL = "https://mgklzlddrxjeikjmpaxk.supabase.co";
   const SUPABASE_KEY = "sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG";
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  alert('StoneAI Loaded - Code dey work!');
-
-  async function saveTransaction(type, title, amount) {
-    alert('Trying to save: ' + title);
-    const { error } = await supabaseClient.from('transactions').insert([{ user_email: 'demo@stoneai.com', type: type, title: title, amount: amount, status: 'Successful' }]);
-    if (error) alert('SUPABASE ERROR: ' + error.message);
-    else alert('SAVED! Go check Supabase');
+  if (error) console.log(error);
   }
 
   // Catch ANY click - button, div, link, anything
