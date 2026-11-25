@@ -231,5 +231,33 @@ function buyAirtime(){
   document.getElementById('phone').value='';
 }
 </script>
+  <!-- StoneAI Supabase Connection -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://mgklzlddrxjeikjmpaxk.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_8Al9tPA9M-Zrnu8HCqZZJA_u-X3-WFG";
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Save any transaction for real
+  async function saveTransaction(type, title, amount) {
+    const { data, error } = await supabaseClient
+      .from('transactions')
+      .insert([{ 
+        user_email: 'demo@stoneai.com',
+        type: type,
+        title: title,
+        amount: amount,
+        status: 'Successful'
+      }]);
+    if (error) console.log('Save error:', error);
+    else console.log('Saved to Supabase:', data);
+  }
+
+  // Example: Call this inside your Airtime button
+  // saveTransaction('airtime', 'MTN Airtime - 0803...', 1000);
+  // saveTransaction('transfer', 'Transfer to John', 5000);
+  // saveTransaction('flight', 'Lagos to Abuja Flight', 85000);
+</script>
+</body>
 </body>
 </html>
