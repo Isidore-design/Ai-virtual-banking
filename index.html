@@ -3,114 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StoneAI Bank</title>
+<title>StoneAI Bank - Send & Receive Globally</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#050508;color:#fff;padding-bottom:30px}
 .top{background:#fff;color:#000;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:22px;font-weight:900}
+.logo{font-size:22px;font-weight:900;cursor:pointer}
+.navlinks{display:flex;gap:8px;font-size:12px;font-weight:800}
+.navlinks span{background:#f1f1f1;padding:8px 10px;border-radius:20px;cursor:pointer}
 .login{ background:#6a00ff;color:#fff;border:none;padding:9px 16px;border-radius:20px;font-weight:800;cursor:pointer}
-.hero{background:linear-gradient(135deg,#0f0c29,#6a00ff);padding:24px 20px;border-radius:0 0 20px 20px}
+.hero{background:linear-gradient(135deg,#0f0c29,#302b63,#6a00ff);padding:24px 20px;border-radius:0 0 20px 20px}
 .hero h1{font-size:26px;line-height:1.2}
 .hero p{font-size:13px;color:#ddd;margin-top:8px}
 .btnrow{display:flex;gap:10px;padding:16px 20px}
 .btnrow button{flex:1;padding:13px;border-radius:12px;font-weight:800;border:none;cursor:pointer;color:#fff;font-size:14px}
 .green{background:#10b981}.purple{background:#8b5cf6}
+.adverts{padding:0 20px}
+.advert{display:none;border-radius:16px;padding:16px}
+.advert.active{display:block}
+.advert h3{font-size:17px}.advert p{font-size:12px;margin-top:6px;line-height:1.4}
+.advert button{margin-top:10px;background:#fff;color:#000;border:none;padding:9px 14px;border-radius:20px;font-weight:800;cursor:pointer}
+.ad1{background:linear-gradient(135deg,#ff6b00,#ffcc00);color:#000}
+.ad2{background:linear-gradient(135deg,#00c853,#00e5ff);color:#000}
+.ad3{background:linear-gradient(135deg,#ff1744,#6a00ff);color:#fff}
+.dots{text-align:center;margin-top:8px}
+.dots span{display:inline-block;width:8px;height:8px;background:#444;border-radius:50%;margin:0 3px;cursor:pointer}
+.dots span.active{background:#fff;width:20px;border-radius:10px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 20px}
-.card{background:#12121c;border:1px solid #333;border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer}
-.card:active{background:#333}
-.icon{font-size:30px}
-.card h4{font-size:13px;margin-top:8px}
-.card p{font-size:11px;color:#aaa}
-.box{margin:20px;background:#fff;color:#000;border-radius:16px;padding:18px}
-input,select{width:100%;padding:12px;margin:7px 0;border-radius:10px;border:1px solid #ddd}
-.pay{background:#000;color:#fff;border:none;padding:14px;width:100%;border-radius:12px;font-weight:800;cursor:pointer}
-.page{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#050508;z-index:9999;overflow-y:auto;padding:20px}
-.page-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;padding-bottom:12px}
-.close{background:#fff;color:#000;border:none;width:36px;height:36px;border-radius:50%;font-weight:800;cursor:pointer}
-.ad{background:linear-gradient(135deg,#ff6b00,#ffcc00);color:#000;border-radius:16px;padding:16px;margin:16px 20px 0}
-.ad button{background:#000;color:#fff;border:none;padding:9px 14px;border-radius:20px;font-weight:800;margin-top:8px;cursor:pointer}
-</style>
-</head>
-<body>
-
-<div class="top">
-<div class="logo">STONEAI</div>
-<button class="login" onclick="openPage('loginPage')">Login / Sign Up</button>
-</div>
-
-<div class="hero">
-<h1>StoneAI Bank is Working Now</h1>
-<p>Send & Receive Money Globally. Flight, Train, Gift Cards, Crypto.</p>
-</div>
-
-<div class="btnrow">
-<button class="green" onclick="openPage('sendPage')">Send Globally</button>
-<button class="purple" onclick="openPage('receivePage')">Receive Globally</button>
-</div>
-
-<div class="ad">
-<h3>StoneAI Bank - Zero Fees This Week!</h3>
-<p>Send money to any bank for FREE. AI protected.</p>
-<button onclick="openPage('sendPage')">Send Now</button>
-</div>
-
-<div style="padding:18px 20px 10px;display:flex;justify-content:space-between">
-<h3>Quick Services</h3><span>Tap to open</span>
-</div>
-
-<div class="grid">
-<div class="card" onclick="openPage('flightPage')"><div class="icon">✈️</div><h4>Flight</h4><p>Book flights</p></div>
-<div class="card" onclick="openPage('trainPage')"><div class="icon">🚆</div><h4>Train</h4><p>Train tickets</p></div>
-<div class="card" onclick="openPage('giftPage')"><div class="icon">🎁</div><h4>Gift Cards</h4><p>Amazon, Apple</p></div>
-<div class="card" onclick="openPage('cryptoPage')"><div class="icon">₿</div><h4>Crypto</h4><p>BTC, USDT</p></div>
-<div class="card" onclick="openPage('sendPage')"><div class="icon">💸</div><h4>Send</h4><p>Send globally</p></div>
-<div class="card" onclick="openPage('receivePage')"><div class="icon">💰</div><h4>Receive</h4><p>Receive globally</p></div>
-</div>
-
-<div class="box">
-<h3>Quick Pay</h3>
-<input id="product" value="Flight">
-<input id="name" placeholder="Your Name">
-<input id="email" placeholder="Email">
-<input id="amount" type="number" placeholder="Amount (NGN)">
-<button class="pay" onclick="payNow()">Pay Now</button>
-<p style="font-size:12px;color:#666;margin-top:8px;text-align:center">Test Mode - No real money yet</p>
-</div>
-
-<div style="padding:0 20px;display:flex;gap:8px">
-<button onclick="openPage('sendPage')" style="flex:1;background:#12121c;color:#fff;border:1px solid #333;padding:11px;border-radius:12px;font-weight:800">Send</button>
-<button onclick="openPage('receivePage')" style="flex:1;background:#12121c;color:#fff;border:1px solid #333;padding:11px;border-radius:12px;font-weight:800">Receive</button>
-<button onclick="openPage('billsPage')" style="flex:1;background:#fff;color:#000;padding:11px;border-radius:12px;font-weight:800">History</button>
-</div>
-
-<!-- PAGES -->
-<div id="billsPage" class="page"><div class="page-head"><h2>Bills</h2><button class="close" onclick="closePage('billsPage')">X</button></div><div class="box" style="margin:16px 0"><p>Flight - N25,000 - Paid</p><br><p>Send to USA - $100 - Sent</p><br><p>Received from UK - £200 - Received</p></div><button class="pay" onclick="closePage('billsPage')">Back</button></div>
-
-<div id="sendPage" class="page"><div class="page-head"><h2>Send Globally</h2><button class="close" onclick="closePage('sendPage')">X</button></div><div class="box" style="margin:16px 0"><h3>Send Money Abroad</h3><select><option>USA - USD</option><option>UK - GBP</option><option>Europe - EUR</option><option>Ghana - GHS</option></select><input placeholder="Receiver Name"><input placeholder="Receiver Account"><input placeholder="Amount NGN" id="sendAmt"><button class="pay" onclick="sendNow()">Send Money</button></div><button class="pay" onclick="closePage('sendPage')">Back</button></div>
-
-<div id="receivePage" class="page"><div class="page-head"><h2>Receive Globally</h2><button class="close" onclick="closePage('receivePage')">X</button></div><div class="box" style="margin:16px 0"><h3>Your Global Accounts</h3><p><b>USA:</b> 123456789 - Routing 026073150</p><br><p><b>UK:</b> 12345678 - Sort 23-14-70</p><br><p><b>EUR:</b> DE89 3704 0044 0532 0130 00</p><br><p><b>Wallet ID:</b> <span id="walletId">STONEAI-123456</span></p><button class="pay" onclick="copyWallet()">Copy Wallet ID</button></div><button class="pay" onclick="closePage('receivePage')">Back</button></div>
-
-<div id="loginPage" class="page"><div class="page-head"><h2>Login / Sign Up</h2><button class="close" onclick="closePage('loginPage')">X</button></div><div class="box" style="margin:16px 0"><h3>Welcome to StoneAI Bank</h3><input id="user" placeholder="Username"><input placeholder="Email"><input type="password" placeholder="Password"><button class="pay" onclick="doLogin()">Login</button><br><br><button class="pay" style="background:#6a00ff" onclick="doSignup()">Sign Up Free</button></div><button class="pay" onclick="closePage('loginPage')">Back</button></div>
-
-<div id="flightPage" class="page"><div class="page-head"><h2>Flight</h2><button class="close" onclick="closePage('flightPage')">X</button></div><div class="box" style="margin:16px 0"><input placeholder="From - Lagos"><input placeholder="To - Abuja"><input placeholder="Amount" id="fAmt"><button class="pay" onclick="payService('Flight','fAmt')">Pay Flight</button></div><button class="pay" onclick="closePage('flightPage')">Back</button></div>
-
-<div id="trainPage" class="page"><div class="page-head"><h2>Train</h2><button class="close" onclick="closePage('trainPage')">X</button></div><div class="box" style="margin:16px 0"><input placeholder="From"><input placeholder="To"><input placeholder="Amount" id="tAmt"><button class="pay" onclick="payService('Train','tAmt')">Pay Train</button></div><button class="pay" onclick="closePage('trainPage')">Back</button></div>
-
-<div id="giftPage" class="page"><div class="page-head"><h2>Gift Cards</h2><button class="close" onclick="closePage('giftPage')">X</button></div><div class="box" style="margin:16px 0"><select><option>Amazon</option><option>Apple</option><option>Steam</option></select><input placeholder="Amount" id="gAmt"><button class="pay" onclick="payService('Gift Cards','gAmt')">Buy Gift Card</button></div><button class="pay" onclick="closePage('giftPage')">Back</button></div>
-
-<div id="cryptoPage" class="page"><div class="page-head"><h2>Crypto</h2><button class="close" onclick="closePage('cryptoPage')">X</button></div><div class="box" style="margin:16px 0"><select><option>USDT</option><option>Bitcoin</option></select><input placeholder="Wallet Address"><input placeholder="Amount" id="cAmt"><button class="pay" onclick="payService('Crypto','cAmt')">Send Crypto</button></div><button class="pay" onclick="closePage('cryptoPage')">Back</button></div>
-
-<script>
-function openPage(id){ document.getElementById(id).style.display='block'; window.scrollTo(0,0); }
-function closePage(id){ document.getElementById(id).style.display='none'; }
-function payNow(){ alert('Pay Now clicked - Form works! Product: ' + document.getElementById('product').value); }
-function sendNow(){ alert('Send Globally clicked - It works!'); }
-function doLogin(){ var u=document.getElementById('user').value; if(!u){ alert('Enter Username'); return; } alert('Welcome ' + u); closePage('loginPage'); }
-function doSignup(){ alert('Account Created - Welcome to StoneAI Bank!'); closePage('loginPage'); }
-function copyWallet(){ alert('Wallet ID Copied: STONEAI-123456'); }
-function payService(s,amtId){ var a=document.getElementById(amtId).value; if(!a){ alert('Enter Amount'); return; } alert(s + ' - Amount: ' + a + ' - Ready to Pay'); }
-</script>
-
-</body>
-</html>
+.card{background:#12121c;border:1px solid #333;border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer
