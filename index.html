@@ -9,11 +9,33 @@
   *{ box-sizing:border-box; margin:0; padding:0; }
   body{ font-family:Arial, sans-serif; background:#050508; color:#fff; }
   .watermark{ position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-25deg); font-size:80px; font-weight:900; color:rgba(255,255,255,0.05); pointer-events:none !important; z-index:0; }
-  .topnav{ background:#fff; color:#000; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:5; }
-  .logo{ font-size:22px; font-weight:900; }
-  .hero{ background:linear-gradient(135deg,#0f0c29,#302b63,#6a00ff); padding:28px 20px; border-radius:0 0 25px 25px; position:relative; z-index:2; }
+  .topnav{ background:#fff; color:#000; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:50; }
+  .logo{ font-size:22px; font-weight:900; cursor:pointer; }
+  .nav-links{ display:flex; gap:12px; font-size:12px; font-weight:800; }
+  .nav-links span{ cursor:pointer; padding:8px 10px; border-radius:20px; background:#f1f1f1; }
+  .nav-links span.active{ background:#000; color:#fff; }
+  .login-btn{ background:#6a00ff; color:#fff; border:none; padding:9px 16px; border-radius:20px; font-weight:800; font-size:12px; cursor:pointer; }
+  .hero{ background:linear-gradient(135deg,#0f0c29,#302b63,#6a00ff); padding:24px 20px; border-radius:0 0 25px 25px; position:relative; z-index:2; }
   .hero h1{ font-size:28px; line-height:1.2; }
   .hero p{ font-size:13px; color:#ddd; margin-top:8px; }
+  /* ADVERT DISPLAYS */
+  .adverts{ padding:16px 20px 0; position:relative; z-index:2; }
+  .advert{ display:none; border-radius:18px; padding:18px; position:relative; overflow:hidden; }
+  .advert.active{ display:block; }
+  .advert h3{ font-size:18px; }
+  .advert p{ font-size:12px; margin-top:6px; line-height:1.4; }
+  .advert button{ margin-top:10px; background:#fff; color:#000; border:none; padding:9px 14px; border-radius:20px; font-weight:800; font-size:12px; cursor:pointer; }
+  .ad-1{ background:linear-gradient(135deg,#ff6b00,#ffcc00); color:#000; }
+  .ad-2{ background:linear-gradient(135deg,#00c853,#00e5ff); color:#000; }
+  .ad-3{ background:linear-gradient(135deg,#ff1744,#6a00ff); color:#fff; }
+  .ad-3 button{ background:#fff; color:#000; }
+  .ad-dots{ text-align:center; margin-top:8px; }
+  .ad-dots span{ display:inline-block; width:8px; height:8px; background:#444; border-radius:50%; margin:0 3px; cursor:pointer; }
+  .ad-dots span.active{ background:#fff; width:20px; border-radius:10px; }
+  .ad-banner{ margin:16px 20px 0; background:#fff; color:#000; border-radius:16px; padding:14px; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; }
+  .ad-banner b{ font-size:14px; }
+  .ad-banner p{ font-size:11px; color:#666; }
+  .ad-banner button{ background:#000; color:#fff; border:none; padding:9px 14px; border-radius:20px; font-weight:800; font-size:12px; cursor:pointer; }
   .section-title{ padding:20px 20px 10px; display:flex; justify-content:space-between; }
   .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:0 20px; position:relative; z-index:10; }
   .service{ background:#12121c; border:1px solid #333; border-radius:18px; padding:18px 8px; text-align:center; cursor:pointer; }
@@ -27,37 +49,83 @@
   input,select{ width:100%; padding:12px; margin:7px 0; border-radius:12px; border:1px solid #ddd; background:#f9f9f9; }
   .pay-btn{ background:#000; color:#fff; border:none; padding:14px; width:100%; border-radius:12px; font-weight:800; cursor:pointer; }
   .history-item{ background:#f9f9f9; border-left:4px solid #6a00ff; padding:12px; margin:8px 0; border-radius:10px; font-size:13px; display:flex; justify-content:space-between; color:#000; }
-  /* FOLDER - SIMPLE AND ALWAYS ON TOP */
-  .folder-modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050508; z-index:9999; overflow-y:auto; padding:20px; }
+  /* PAGES - BILLS / WALLET / LOGIN - ALL OPEN */
+  .page-modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050508; z-index:9999; overflow-y:auto; padding:20px; }
+  .page-header{ display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222; padding-bottom:14px; }
   .close-btn{ background:#fff; color:#000; border:none; width:38px; height:38px; border-radius:50%; font-size:18px; font-weight:800; cursor:pointer; }
   #lockModal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); z-index:10000; text-align:center; padding-top:50px; }
   .lock-box{ background:#111; margin:20px; padding:28px; border-radius:20px; }
+  .wallet-id-box{ background:#fff; color:#000; padding:10px; border-radius:10px; font-weight:800; font-size:13px; margin-top:10px; display:inline-block; }
+  .qr-img{ width:150px; height:150px; background:#fff; border-radius:12px; padding:8px; display:block; margin:12px auto; }
 </style>
 </head>
 <body>
 <div class="watermark">STONEAI</div>
 
-<div class="topnav"><div class="logo">🪨 STONEAI</div><div style="font-size:12px; font-weight:800;">BILLPOINT PREMIUM</div></div>
+<!-- TOP NAV - ALL BUTTONS NOW WORK -->
+<div class="topnav">
+  <div class="logo" onclick="goHome()">🪨 STONEAI</div>
+  <div class="nav-links">
+    <span onclick="openPage('billsPage')">Bills</span>
+    <span onclick="openPage('walletPage')">Wallet</span>
+  </div>
+  <button class="login-btn" onclick="openPage('loginPage')">Login / Sign Up</button>
+</div>
 
 <div class="hero">
   <h1>Pay Bills, Book Travel & Send Money in Seconds</h1>
-  <p>Tap any icon below. Every icon opens its own folder.</p>
-  <p style="font-size:12px; margin-top:10px; background:rgba(255,255,255,0.2); display:inline-block; padding:6px 10px; border-radius:20px;">TEST: Tap Flight now — it must open</p>
+  <p>StoneAI Bank — Flight, Train, Gift Cards, Crypto, Send and Receive.</p>
+</div>
+
+<!-- ADVERT DISPLAYS ABOUT STONEAI BANK -->
+<div class="adverts">
+  <div class="advert ad-1 active" id="ad1">
+    <h3>🔥 StoneAI Bank - Zero Transfer Fees This Week!</h3>
+    <p>Send money to any bank in Nigeria for FREE. No hidden charges. Fast, secure, and AI protected.</p>
+    <button onclick="openPage('sendPage')">Send Money Now →</button>
+  </div>
+  <div class="advert ad-2" id="ad2">
+    <h3>✈️ StoneAI Travel Deal - 20% Off Flights!</h3>
+    <p>Book your next flight with StoneAI and save 20%. Lagos to Abuja from just ₦20,000. Limited offer.</p>
+    <button onclick="openPage('flightPage')">Book Flight →</button>
+  </div>
+  <div class="advert ad-3" id="ad3">
+    <h3>💳 Get Your StoneAI Virtual Card - Only $10</h3>
+    <p>Shop online anywhere in the world. Delivered to your doorstep. Secured by Face & Fingerprint.</p>
+    <button onclick="openPage('walletPage')">Get Your Card →</button>
+  </div>
+  <div class="ad-dots">
+    <span class="active" onclick="showAd(1)"></span>
+    <span onclick="showAd(2)"></span>
+    <span onclick="showAd(3)"></span>
+  </div>
+</div>
+
+<!-- SECOND ADVERT BANNER -->
+<div class="ad-banner">
+  <div><b>🎁 StoneAI Rewards</b><p>Earn points on every bill you pay</p></div>
+  <button onclick="openPage('billsPage')">Claim Reward</button>
 </div>
 
 <div class="section-title"><h3>Quick Services</h3><span>Tap to open</span></div>
 <div class="services-grid">
-  <div class="service" onclick="openFolder('Flight')"><div class="service-icon bg-flight">✈️</div><h4>Flight</h4><p>Book flights</p></div>
-  <div class="service" onclick="openFolder('Train')"><div class="service-icon bg-train">🚆</div><h4>Train</h4><p>Train tickets</p></div>
-  <div class="service" onclick="openFolder('Gift Cards')"><div class="service-icon bg-gift">🎁</div><h4>Gift Cards</h4><p>Amazon, Apple</p></div>
-  <div class="service" onclick="openFolder('Crypto')"><div class="service-icon bg-crypto">₿</div><h4>Crypto</h4><p>BTC, USDT</p></div>
-  <div class="service" onclick="openFolder('Send')"><div class="service-icon bg-send">💸</div><h4>Send</h4><p>Send money</p></div>
-  <div class="service" onclick="openFolder('Receive')"><div class="service-icon bg-receive">💰</div><h4>Receive</h4><p>Receive funds</p></div>
+  <div class="service" onclick="openPage('flightPage')"><div class="service-icon bg-flight">✈️</div><h4>Flight</h4><p>Book flights</p></div>
+  <div class="service" onclick="openPage('trainPage')"><div class="service-icon bg-train">🚆</div><h4>Train</h4><p>Train tickets</p></div>
+  <div class="service" onclick="openPage('giftPage')"><div class="service-icon bg-gift">🎁</div><h4>Gift Cards</h4><p>Amazon, Apple</p></div>
+  <div class="service" onclick="openPage('cryptoPage')"><div class="service-icon bg-crypto">₿</div><h4>Crypto</h4><p>BTC, USDT</p></div>
+  <div class="service" onclick="openPage('sendPage')"><div class="service-icon bg-send">💸</div><h4>Send</h4><p>Send money</p></div>
+  <div class="service" onclick="openPage('receivePage')"><div class="service-icon bg-receive">💰</div><h4>Receive</h4><p>Receive funds</p></div>
+</div>
+
+<!-- ADVERT MIDDLE -->
+<div class="ad-banner" style="background:linear-gradient(135deg,#6a00ff,#00d4ff); color:#fff;">
+  <div><b style="color:#fff;">🛡️ StoneAI is AI Protected</b><p style="color:#eee;">Every transaction is monitored by AI</p></div>
+  <button onclick="openPage('loginPage')" style="background:#fff; color:#000;">Join Now</button>
 </div>
 
 <div class="booking">
   <h3 id="bookingTitle">✈️ Flight Booking</h3>
-  <p>Fill this form after you open a folder, or fill it directly here.</p>
+  <p>Fill this form to pay.</p>
   <input id="product" value="Flight">
   <input id="name" placeholder="Your Name">
   <input id="email" type="email" placeholder="Email">
@@ -65,11 +133,11 @@
   <button class="pay-btn" onclick="openLock()">Approve with Face / Fingerprint & Pay</button>
 </div>
 
-<div class="section-title"><h3>Recent Transactions</h3><span onclick="openFolder('History')">See All →</span></div>
+<div class="section-title"><h3>Recent Transactions</h3><span onclick="openPage('billsPage')">See All →</span></div>
 <div style="padding:0 20px; display:flex; gap:8px;">
-  <button onclick="openFolder('Send')" style="flex:1; background:#12121c; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">💸 Send</button>
-  <button onclick="openFolder('Receive')" style="flex:1; background:#12121c; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">💰 Receive</button>
-  <button onclick="openFolder('History')" style="flex:1; background:#fff; color:#000; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">📜 History</button>
+  <button onclick="openPage('sendPage')" style="flex:1; background:#12121c; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">💸 Send</button>
+  <button onclick="openPage('receivePage')" style="flex:1; background:#12121c; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">💰 Receive</button>
+  <button onclick="openPage('billsPage')" style="flex:1; background:#fff; color:#000; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">📜 History</button>
 </div>
 <div style="padding:20px;">
   <div class="history-item"><span>✈️ Flight</span><b>₦25,000</b></div>
@@ -77,52 +145,58 @@
   <div class="history-item"><span>💰 Received from Mary</span><b>₦20,000</b></div>
 </div>
 
-<!-- FOLDER MODAL -->
-<div id="folderModal" class="folder-modal">
-  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222; padding-bottom:14px;">
-    <h2 id="folderTitle">Folder</h2><button class="close-btn" onclick="closeFolder()">X</button>
+<!-- ADVERT BOTTOM -->
+<div class="ad-banner">
+  <div><b>📱 Download StoneAI App</b><p>Fastest way to pay bills in Nigeria</p></div>
+  <button onclick="openPage('loginPage')">Sign Up Free</button>
+</div>
+<div style="height:30px;"></div>
+
+<!-- ============ BILLS PAGE ============ -->
+<div id="billsPage" class="page-modal">
+  <div class="page-header"><h2>Bills</h2><button class="close-btn" onclick="closePage('billsPage')">X</button></div>
+  <p style="color:#aaa; font-size:13px; margin:14px 0;">All your bills and transactions are here.</p>
+  <div class="booking" style="margin:0;">
+    <div class="history-item"><span>✈️ Flight - Lagos to Abuja</span><b>₦25,000</b></div>
+    <div class="history-item"><span>🚆 Train - Lagos to Ibadan</span><b>₦5,500</b></div>
+    <div class="history-item"><span>🎁 Gift Card - Amazon</span><b>₦5,000</b></div>
+    <div class="history-item"><span>₿ Crypto - USDT</span><b>₦50,000</b></div>
+    <div class="history-item"><span>💸 Send to John</span><b>₦10,000</b></div>
+    <div class="history-item"><span>💰 Received from Mary</span><b>₦20,000</b></div>
   </div>
-  <p id="folderDesc" style="color:#aaa; font-size:13px; margin:14px 0;">Folder content</p>
-  <div id="folderContent"></div>
-  <div class="booking" style="margin:16px 0;">
-    <h3>New Transaction in this Folder</h3>
-    <input id="folderProduct" placeholder="Service">
-    <input id="folderAmount" type="number" placeholder="Amount (NGN)">
-    <button class="pay-btn" onclick="payFromFolder()">Pay with Face / Fingerprint</button>
-  </div>
-  <button onclick="closeFolder()" style="width:100%; background:#222; color:#fff; border:none; padding:12px; border-radius:12px;">← Back to Home</button>
+  <button onclick="closePage('billsPage')" style="width:100%; background:#222; color:#fff; border:none; padding:12px; border-radius:12px; margin-top:14px;">← Back</button>
 </div>
 
-<div id="lockModal"><div class="lock-box"><h2>Security Lock</h2><p>Approve this transaction</p><div style="font-size:60px;">👤</div><p>Face ID</p><div style="font-size:60px;">👆</div><p>Fingerprint</p><p id="aiLockText">AI Monitoring: Checking...</p><button class="pay-btn" onclick="approveAndPay()">Approve with Face / Fingerprint</button><br><br><button onclick="closeLock()" style="background:none; border:none; color:#fff;">Cancel</button></div></div>
+<!-- ============ WALLET PAGE ============ -->
+<div id="walletPage" class="page-modal">
+  <div class="page-header"><h2>Wallet</h2><button class="close-btn" onclick="closePage('walletPage')">X</button></div>
+  <div style="background:linear-gradient(135deg,#000,#6a00ff); border-radius:20px; padding:20px; margin-top:16px; text-align:center;">
+    <p style="color:#ccc; font-size:12px;">My StoneAI Wallet Balance</p>
+    <h2 style="font-size:32px; margin:8px 0;">₦0.00</h2>
+    <div class="wallet-id-box" id="walletIdDisplay">STONEAI-000000</div>
+    <img id="qrImage" class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=STONEAI-000000">
+    <p style="font-size:12px; color:#ddd;">Scan QR or share Wallet ID to receive funds</p>
+    <button onclick="createWallet()" style="background:#fff; color:#000; border:none; padding:11px 18px; border-radius:12px; font-weight:800; margin-top:10px; cursor:pointer;">Generate New Wallet ID</button>
+    <button onclick="copyWalletId()" style="background:transparent; color:#fff; border:1px solid #fff; padding:11px 18px; border-radius:12px; font-weight:800; margin-top:8px; cursor:pointer;">Copy Wallet ID</button>
+  </div>
+  <div style="background:#fff; color:#000; border-radius:16px; padding:16px; margin-top:14px;">
+    <h3>💳 StoneAI Virtual Card - $10 Only</h3><p style="font-size:12px; color:#666; margin:6px 0;">Shop online anywhere. Delivered to your doorstep.</p>
+    <input id="cardName" placeholder="Full Name for Delivery">
+    <input id="cardAddress" placeholder="Delivery Address">
+    <button class="pay-btn" onclick="orderVirtualCard()">Order Virtual Card</button>
+  </div>
+  <button onclick="closePage('walletPage')" style="width:100%; background:#222; color:#fff; border:none; padding:12px; border-radius:12px; margin-top:14px;">← Back</button>
+</div>
 
-<script>
-const PAYSTACK_KEY = 'pk_test_4efc2b074b7fafb058531a67010bf86e97302705';
-function openFolder(folder){
-  alert('Opening ' + folder + ' folder');
-  var modal = document.getElementById('folderModal');
-  modal.style.display = 'block';
-  document.getElementById('folderTitle').innerText = '📁 ' + folder;
-  document.getElementById('folderDesc').innerText = 'You are now inside the ' + folder + ' folder. All ' + folder + ' transactions are here.';
-  document.getElementById('folderProduct').value = folder;
-  document.getElementById('product').value = folder;
-  document.getElementById('bookingTitle').innerText = folder + ' - Booking';
-  var items = {
-    'Flight': '<div class="history-item"><span>Flight Lagos to Abuja</span><b>₦25,000</b></div>',
-    'Train': '<div class="history-item"><span>Train Lagos to Ibadan</span><b>₦5,500</b></div>',
-    'Gift Cards': '<div class="history-item"><span>Amazon Gift Card</span><b>₦5,000</b></div>',
-    'Crypto': '<div class="history-item"><span>USDT Purchase</span><b>₦50,000</b></div>',
-    'Send': '<div class="history-item"><span>Send to John</span><b>₦10,000</b></div>',
-    'Receive': '<div class="history-item"><span>Received from Mary</span><b>₦20,000</b></div>',
-    'History': '<div class="history-item"><span>Flight</span><b>₦25,000</b></div><div class="history-item"><span>Send</span><b>₦10,000</b></div><div class="history-item"><span>Receive</span><b>₦20,000</b></div>'
-  };
-  document.getElementById('folderContent').innerHTML = items[folder] || items['History'];
-  window.scrollTo(0,0);
-}
-function closeFolder(){ document.getElementById('folderModal').style.display='none'; }
-function payFromFolder(){ var p=document.getElementById('folderProduct').value; var a=document.getElementById('folderAmount').value; if(!a){ alert('Please enter amount'); return; } document.getElementById('product').value=p; document.getElementById('amount').value=a; closeFolder(); openLock(); }
-function openLock(){ var name=document.getElementById('name').value; var email=document.getElementById('email').value; var product=document.getElementById('product').value; var amount=document.getElementById('amount').value; if(!name||!email||!product||!amount){ alert('Please fill Name, Email, Service and Amount'); return; } document.getElementById('lockModal').style.display='block'; }
-function closeLock(){ document.getElementById('lockModal').style.display='none'; }
-function approveAndPay(){ closeLock(); alert('Approved - Opening Paystack...'); var handler=PaystackPop.setup({ key:PAYSTACK_KEY, email:document.getElementById('email').value, amount:document.getElementById('amount').value*100, currency:'NGN', ref:'STONEAI-'+Math.floor(Math.random()*1000000000), callback:function(r){ alert('Payment Successful: '+r.reference); }, onClose:function(){ alert('Payment cancelled'); } }); handler.openIframe(); }
-</script>
-</body>
-</html>
+<!-- ============ LOGIN / SIGN UP PAGE ============ -->
+<div id="loginPage" class="page-modal">
+  <div class="page-header"><h2>Login / Sign Up</h2><button class="close-btn" onclick="closePage('loginPage')">X</button></div>
+  <div style="background:#111; border-radius:20px; padding:20px; margin-top:16px; text-align:center;">
+    <div style="font-size:50px;">🎅</div>
+    <h3>Welcome to StoneAI Bank</h3>
+    <p style="font-size:12px; color:#aaa; margin:6px 0;">Login or create your free account in seconds</p>
+    <input id="loginUsername" placeholder="Username" style="background:#000; color:#fff; border:1px solid #333;">
+    <input id="loginEmail" type="email" placeholder="Email" style="background:#000; color:#fff; border:1px solid #333;">
+    <input id="loginPassword" type="password" placeholder="Password" style="background:#000; color:#fff; border:1px solid #333;">
+    <button onclick="loginUser()" style="width:100%; background:#fff; color:#000; border:none; padding:14px; border-radius:12px; font-weight:800; cursor:pointer;">Login with Face / Fingerprint</button>
+    <button onclick="signupUser()" style="width:100%; background:#6a00ff; color:#fff; border:none; padding:14px; border-radius:12px; font-weight:800; margin-top:8px; cursor:pointer;">Create
