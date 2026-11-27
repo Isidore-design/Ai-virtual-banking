@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>StoneAI</title>
 <style>
@@ -70,5 +71,28 @@ async function placeOrder(){
   }
 }
 </script>
+  <html>
+<head>
+  <title>StoneAI</title>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- your other head stuff -->
+</head>
+
+<body>
+  <h1>StoneAI</h1>
+  
+  <!-- FORM HERE -->
+  <input id="name">
+  <input id="email">
+  <input id="product">
+  <button onclick="payWithPaystack()">Pay & Order</button>
+
+  <!-- MAIN SCRIPT HERE - JUST BEFORE </body> -->
+  <script>
+    // Your Paystack + Supabase code here
+  </script>
+
+</body>
+</html>
 </body>
 </html>
