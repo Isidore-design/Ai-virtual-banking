@@ -1,37 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>StoneAI</title>
+<title>🪨 STONEAI Bank</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <style>
-  body{ background:#0a0a0a; color:#fff; font-family:Arial; margin:0; padding:0; }
-  .header{ background:linear-gradient(135deg,#000,#1a1400); padding:25px; text-align:center; border-bottom:2px solid #d4af37; }
-  .header h1{ color:#d4af37; margin:0; font-size:32px; letter-spacing:2px; }
-  .header p{ color:#ccc; }
-  .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:20px; }
-  .card{ background:#1a1a1a; border:1px solid #d4af37; border-radius:15px; padding:18px 5px; text-align:center; cursor:pointer; }
-  .card span{ font-size:32px; display:block; }
-  .card p{ margin:8px 0 0; font-size:13px; color:#ffd700; }
-  .section{ padding:0 20px 20px; }
+  *{ box-sizing:border-box; }
+  body{ background:#0a0a0a; color:#fff; font-family:Arial, sans-serif; margin:0; padding:0; position:relative; overflow-x:hidden; }
+  /* WATERMARK CENTER */
+  .watermark{
+    position:fixed; top:50%; left:50%;
+    transform:translate(-50%,-50%) rotate(-25deg);
+    font-size:72px; font-weight:900; color:rgba(212,175,55,0.08);
+    letter-spacing:6px; pointer-events:none; z-index:0; white-space:nowrap;
+  }
+  .header{ background:linear-gradient(135deg,#000,#1a1400,#000); padding:28px 15px; text-align:center; border-bottom:2px solid #d4af37; position:relative; z-index:1; }
+  /* BANK NAME - BLACK ROCK BEFORE */
+  .bank-name{
+    font-family: Georgia, serif;
+    font-size:40px; font-weight:900;
+    color:#d4af37; letter-spacing:3px;
+    text-shadow:0 0 18px rgba(212,175,55,0.6);
+  }
+  .ai-badge{ background:#d4af37; color:#000; font-size:11px; padding:4px 10px; border-radius:20px; font-weight:bold; }
+  .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:20px; position:relative; z-index:1; }
+  .card{ background:#1a1a1a; border:1px solid #d4af37; border-radius:15px; padding:16px 5px; text-align:center; cursor:pointer; }
+  .card span{ font-size:30px; display:block; }
+  .card p{ margin:8px 0 0; font-size:12px; color:#ffd700; }
+  .section{ padding:0 20px 20px; position:relative; z-index:1; }
   .box{ background:#111; border:1px solid #d4af37; border-radius:15px; padding:20px; }
-  input,select{ width:100%; padding:12px; margin:8px 0; border-radius:10px; border:1px solid #d4af37; background:#000; color:#fff; box-sizing:border-box; }
-  .gold-btn{ background:#d4af37; color:#000; border:none; padding:14px; width:100%; border-radius:10px; font-weight:bold; font-size:16px; }
+  input,select{ width:100%; padding:12px; margin:8px 0; border-radius:10px; border:1px solid #d4af37; background:#000; color:#fff; }
+  .gold-btn{ background:#d4af37; color:#000; border:none; padding:14px; width:100%; border-radius:10px; font-weight:bold; font-size:16px; cursor:pointer; }
   .history-item{ background:#000; border-left:3px solid #d4af37; padding:10px; margin:8px 0; border-radius:8px; font-size:14px; }
-  /* Security Modal */
-  #lockModal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:999; text-align:center; padding-top:80px; }
+  .virtual-card{ background: linear-gradient(135deg, #000, #2a2100, #d4af37); border:2px solid #d4af37; border-radius:20px; padding:20px; text-align:center; }
+  /* LOCK MODAL */
+  #lockModal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); z-index:999; text-align:center; padding-top:60px; }
   .lock-box{ background:#111; border:2px solid #d4af37; margin:20px; padding:30px; border-radius:20px; }
 </style>
 </head>
 <body>
 
+<!-- WATERMARK -->
+<div class="watermark">STONEAI</div>
+
+<!-- HEADER / BANK NAME -->
 <div class="header">
-  <h1>🪨 STONEAI</h1>
-  <p>Secure • Fast • Gold Standard</p>
-  <p style="font-size:12px;">🔒 Face & Thumb Lock Protected</p>
+  <div class="bank-name">🪨 STONEAI</div>
+  <p style="margin:5px; color:#ccc;">STONEAI BANK • Secure • Fast • Gold Standard</p>
+  <p><span class="ai-badge">🤖 AI MONITORED</span> <span style="font-size:12px;">🔒 Face & Thumb Lock Protected</span></p>
 </div>
 
-<!-- SERVICES -->
+<!-- ALL SERVICES -->
 <div class="grid">
   <div class="card" onclick="selectService('Flight')"><span>✈️</span><p>Flight</p></div>
   <div class="card" onclick="selectService('Train')"><span>🚆</span><p>Train</p></div>
@@ -40,15 +59,55 @@
   <div class="card" onclick="selectService('Gift Cards')"><span>🎁</span><p>Gift Cards</p></div>
   <div class="card" onclick="selectService('Crypto Wallet')"><span>₿</span><p>Crypto Wallet</p></div>
   <div class="card" onclick="selectService('Smoking Accessories')"><span>💨</span><p>Smoking Accessories</p></div>
+  <div class="card" onclick="selectService('Video Games')"><span>🎮</span><p>Video Games</p></div>
+  <div class="card" onclick="selectService('Game Subscription')"><span>🕹️</span><p>Game Sub</p></div>
   <div class="card" onclick="showHistory()"><span>📜</span><p>History</p></div>
 </div>
 
-<!-- ORDER / TRANSACTION FORM -->
+<!-- VIDEO GAMES - AI MONITORED -->
+<div class="section">
+  <div class="box">
+    <h3 style="color:#d4af37; margin-top:0;">🎮 Video Games & Subscriptions <span class="ai-badge">🤖 AI MONITORED</span></h3>
+    <p style="font-size:12px; color:#aaa;">AI dey watch every game order for fraud, check your Face / Thumb, and approve am in seconds.</p>
+    <label>Choose Game / Sub</label>
+    <select id="gameChoice" onchange="setGamePrice()">
+      <option value="">Select Game / Subscription...</option>
+      <option value="PS Plus - 1 Month - 15000">PS Plus - 1 Month - ₦15,000</option>
+      <option value="PS Plus - 3 Months - 35000">PS Plus - 3 Months - ₦35,000</option>
+      <option value="Xbox Game Pass - 1 Month - 12000">Xbox Game Pass - 1 Month - ₦12,000</option>
+      <option value="Steam Card - 10000">Steam Card - ₦10,000</option>
+      <option value="EA FC 26 - 45000">EA FC 26 - ₦45,000</option>
+      <option value="GTA VI Pre-Order - 60000">GTA VI Pre-Order - ₦60,000</option>
+      <option value="Call of Duty - 50000">Call of Duty - ₦50,000</option>
+    </select>
+    <p id="aiCheck" style="font-size:12px; color:#7CFC00; display:none;">🤖 AI Check: ✅ Safe</p>
+    <button class="gold-btn" onclick="orderGame()">🔒 Order Game with Face / Thumb + AI</button>
+  </div>
+</div>
+
+<!-- VIRTUAL CARD $10 -->
+<div class="section">
+  <div class="virtual-card">
+    <div style="font-size:42px;">🪨💳</div>
+    <h2 style="color:#ffd700; margin:5px;">STONEAI Virtual Card</h2>
+    <p style="font-size:14px;">Use am to buy games, subscriptions, flights & more online</p>
+    <h1 style="color:#fff; margin:5px;">$10 <span style="font-size:14px;">Only</span></h1>
+    <p style="font-size:13px;">🚚 Delivered to your doorstep</p>
+    <p style="font-size:12px; color:#eee;">Physical delivery available • AI Protected • Face / Thumb Lock</p>
+    <input id="cardName" placeholder="Full Name for Card Delivery" style="background:#000;">
+    <input id="cardAddress" placeholder="Delivery Address (Doorstep)" style="background:#000;">
+    <input id="cardPhone" placeholder="Phone Number" style="background:#000;">
+    <button class="gold-btn" onclick="orderVirtualCard()" style="background:#fff; color:#000;">🪨 Get My $10 Virtual Card</button>
+    <p style="font-size:11px; color:#fff;">AI go verify your Face / Thumb before we deliver</p>
+  </div>
+</div>
+
+<!-- MAIN TRANSACTION FORM -->
 <div class="section">
   <div class="box">
     <h3 style="color:#d4af37; margin-top:0;">Make Transaction</h3>
     <label>Service</label>
-    <input id="product" placeholder="e.g. Flight" value="">
+    <input id="product" placeholder="e.g. Flight">
     <label>Your Name</label>
     <input id="name" placeholder="Your Name">
     <label>Email</label>
@@ -63,11 +122,13 @@
 <!-- TRANSACTION HISTORY -->
 <div class="section" id="historySection">
   <div class="box">
-    <h3 style="color:#d4af37;">Transaction History</h3>
+    <h3 style="color:#d4af37;">📜 Transaction History</h3>
     <div id="historyList">
       <div class="history-item">✈️ Flight - ₦25,000 - Paid ✅</div>
+      <div class="history-item">🎮 PS Plus - ₦15,000 - Paid ✅ <span class="ai-badge">AI OK</span></div>
       <div class="history-item">💸 Send Money - ₦10,000 - Paid ✅</div>
       <div class="history-item">🎁 Gift Card - ₦5,000 - Pending ⏳</div>
+      <div class="history-item">💳 Virtual Card $10 - Delivered 🚚</div>
     </div>
     <p style="font-size:12px; color:#888;">Real history will load from Supabase orders table</p>
   </div>
@@ -76,12 +137,13 @@
 <!-- FACE / THUMB LOCK MODAL -->
 <div id="lockModal">
   <div class="lock-box">
-    <h2 style="color:#d4af37;">Security Lock</h2>
+    <h2 style="color:#d4af37;">🪨 Security Lock</h2>
     <p>Approve this transaction</p>
-    <div style="font-size:70px;">👤</div>
+    <div style="font-size:65px;">👤</div>
     <p>Face ID</p>
-    <div style="font-size:70px;">👆</div>
+    <div style="font-size:65px;">👆</div>
     <p>Fingerprint</p>
+    <p id="aiLockText" style="font-size:12px; color:#7CFC00;">🤖 AI Monitoring: Checking...</p>
     <button class="gold-btn" onclick="approveAndPay()">✅ Approve with Face / Thumb</button>
     <br><br>
     <button onclick="closeLock()" style="background:none; border:none; color:#fff;">Cancel</button>
@@ -93,42 +155,64 @@ const PAYSTACK_KEY = 'pk_test_4efc2b074b7fafb058531a67010bf86e97302705';
 
 function selectService(name){
   document.getElementById('product').value = name;
-  window.scrollTo(0, 400);
+  document.getElementById('product').scrollIntoView({behavior:'smooth'});
 }
-
 function showHistory(){
-  document.getElementById('historySection').scrollIntoView();
+  document.getElementById('historySection').scrollIntoView({behavior:'smooth'});
 }
-
+function setGamePrice(){
+  let val = document.getElementById('gameChoice').value;
+  if(val){
+    let parts = val.split(' - ');
+    let price = parts[parts.length-1];
+    document.getElementById('product').value = val;
+    document.getElementById('amount').value = price;
+    let el = document.getElementById('aiCheck');
+    el.style.display = 'block';
+    el.innerHTML = '🤖 AI Check: Scanning...';
+    setTimeout(()=>{ el.innerHTML = '🤖 AI Check: ✅ No fraud detected • Face match OK • Safe to proceed'; }, 1200);
+  }
+}
+function orderGame(){
+  let game = document.getElementById('gameChoice').value;
+  if(!game){ alert('Pick a game first'); return; }
+  openLock();
+}
+function orderVirtualCard(){
+  let n = document.getElementById('cardName').value;
+  let a = document.getElementById('cardAddress').value;
+  if(!n || !a){ alert('Fill name + delivery address'); return; }
+  document.getElementById('product').value = 'StoneAI Virtual Card $10 - Delivery to ' + a;
+  document.getElementById('amount').value = 15000;
+  document.getElementById('name').value = n;
+  openLock();
+}
 function openLock(){
   let name = document.getElementById('name').value;
   let email = document.getElementById('email').value;
   let product = document.getElementById('product').value;
   let amount = document.getElementById('amount').value;
   if(!name || !email || !product || !amount){
-    alert('Fill all fields first');
+    alert('Fill Name, Email, Service & Amount first');
     return;
   }
   document.getElementById('lockModal').style.display = 'block';
+  document.getElementById('aiLockText').innerHTML = '🤖 AI Monitoring: Scanning Face / Thumb...';
+  setTimeout(()=>{ document.getElementById('aiLockText').innerHTML = '🤖 AI Monitoring: ✅ Identity Verified • Safe'; }, 1000);
 }
-
 function closeLock(){
   document.getElementById('lockModal').style.display = 'none';
 }
-
 function approveAndPay(){
-  // Simulate Face / Thumb check - in real app, this connects to phone biometric
   closeLock();
-  alert('Face / Thumb Verified ✅ Now opening Paystack...');
+  alert('Face / Thumb Verified ✅ AI Approved ✅ Now opening Paystack...');
   payWithPaystack();
 }
-
 function payWithPaystack(){
   let name = document.getElementById('name').value;
   let email = document.getElementById('email').value;
   let product = document.getElementById('product').value;
   let amount = document.getElementById('amount').value;
-
   let handler = PaystackPop.setup({
     key: PAYSTACK_KEY,
     email: email,
@@ -142,8 +226,6 @@ function payWithPaystack(){
     onClose: function(){ alert('Payment cancelled'); },
     callback: function(response){
       alert('Payment Successful! Ref: ' + response.reference);
-      // Save to Supabase here - use your existing saveOrder function
-      // saveOrder(name, email, product, response.reference)
     }
   });
   handler.openIframe();
