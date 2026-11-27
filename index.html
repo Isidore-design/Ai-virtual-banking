@@ -9,60 +9,50 @@
 <style>
   *{ box-sizing:border-box; margin:0; padding:0; }
   body{ font-family:'Plus Jakarta Sans',sans-serif; background:#050508; color:#fff; overflow-x:hidden; }
-  /* WATERMARK */
-  .watermark{ position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-25deg); font-size:90px; font-weight:900; color:rgba(255,255,255,0.06); letter-spacing:12px; pointer-events:none; z-index:0; white-space:nowrap; font-family:'Playfair Display',serif; }
-  .watermark2{ position:fixed; bottom:18px; right:18px; font-size:11px; letter-spacing:3px; color:rgba(255,255,255,0.2); z-index:0; font-weight:800; }
-
-  /* BILLPOINT TOP NAV */
+  /* WATERMARK - NEVER BLOCKS CLICKS */
+  .watermark{ position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-25deg); font-size:90px; font-weight:900; color:rgba(255,255,255,0.06); letter-spacing:12px; pointer-events:none !important; z-index:0; white-space:nowrap; font-family:'Playfair Display',serif; }
+  .watermark2{ position:fixed; bottom:18px; right:18px; font-size:11px; letter-spacing:3px; color:rgba(255,255,255,0.2); z-index:0; font-weight:800; pointer-events:none !important; }
   .topnav{ background:#fff; color:#000; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:5; }
   .logo{ font-family:'Playfair Display',serif; font-size:24px; font-weight:800; }
   .logo span{ background:#000; color:#fff; padding:2px 8px; border-radius:6px; }
   .nav-links{ display:flex; gap:14px; font-size:12px; font-weight:700; }
   .nav-links span{ cursor:pointer; }
   .nav-links span.active{ color:#6a00ff; border-bottom:2px solid #6a00ff; padding-bottom:2px; }
-  .login-btn{ background:#000; color:#fff; border:none; padding:8px 14px; border-radius:20px; font-weight:800; font-size:12px; }
-
-  /* HERO - BILLPOINT STYLE PREMIUM */
+  .login-btn{ background:#000; color:#fff; border:none; padding:8px 14px; border-radius:20px; font-weight:800; font-size:12px; cursor:pointer; }
   .hero{ background: linear-gradient(135deg, #0f0c29 0%, #302b63 45%, #6a00ff 75%, #00d4ff 100%); padding:30px 20px 45px; border-radius:0 0 30px 30px; position:relative; z-index:2; overflow:hidden; }
-  .hero::after{ content:"STONEAI"; position:absolute; right:-20px; bottom:-10px; font-size:90px; font-weight:900; color:rgba(255,255,255,0.06); letter-spacing:5px; }
+  .hero::after{ content:"STONEAI"; position:absolute; right:-20px; bottom:-10px; font-size:90px; font-weight:900; color:rgba(255,255,255,0.06); pointer-events:none; }
   .hero-badge{ background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); display:inline-block; padding:6px 12px; border-radius:20px; font-size:11px; font-weight:800; }
   .hero h1{ font-size:30px; line-height:1.15; margin-top:14px; font-weight:800; }
   .hero p{ font-size:13px; color:#e8e8ff; margin-top:8px; line-height:1.5; }
   .hero-stats{ display:flex; gap:10px; margin-top:18px; }
-  .stat{ background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); border-radius:14px; padding:10px 12px; flex:1; text-align:center; }
+  .stat{ background:rgba(255,255,255,0.15); border-radius:14px; padding:10px 12px; flex:1; text-align:center; }
   .stat b{ font-size:16px; display:block; }
   .stat span{ font-size:10px; opacity:0.85; }
-  .search-card{ background:#fff; border-radius:18px; padding:14px; margin-top:20px; color:#000; box-shadow:0 15px 30px rgba(0,0,0,0.3); position:relative; z-index:2; }
+  .search-card{ background:#fff; border-radius:18px; padding:14px; margin-top:20px; color:#000; position:relative; z-index:2; }
   .search-card input{ width:100%; padding:12px; border:1px solid #ddd; border-radius:12px; font-size:14px; outline:none; }
-  .search-card button{ width:100%; background:#6a00ff; color:#fff; border:none; padding:13px; border-radius:12px; font-weight:800; margin-top:8px; font-size:14px; }
-
-  /* QUICK SERVICES - BILLPOINT GRID */
+  .search-card button{ width:100%; background:#6a00ff; color:#fff; border:none; padding:13px; border-radius:12px; font-weight:800; margin-top:8px; font-size:14px; cursor:pointer; }
   .section-title{ padding:22px 20px 12px; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:1; }
   .section-title h3{ font-size:17px; font-weight:800; }
-  .section-title span{ font-size:12px; color:#a78bfa; font-weight:700; }
-  .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:0 20px; position:relative; z-index:1; }
-  .service{ background:#12121c; border:1px solid #222; border-radius:20px; padding:18px 10px; text-align:center; cursor:pointer; transition:0.2s; position:relative; overflow:hidden; }
-  .service.active{ border:2px solid #6a00ff; background:#1a1033; }
-  .service:active{ transform:scale(0.96); }
-  .service-icon{ width:56px; height:56px; margin:0 auto; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:28px; }
-  .service h4{ font-size:13px; margin-top:10px; }
-  .service p{ font-size:11px; color:#aaa; margin-top:3px; }
-  .badge{ position:absolute; top:8px; right:8px; background:#fff; color:#000; font-size:9px; font-weight:800; padding:3px 6px; border-radius:20px; }
+  .section-title span{ font-size:12px; color:#a78bfa; font-weight:700; cursor:pointer; }
+  /* SERVICES - FULLY CLICKABLE */
+  .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:0 20px; position:relative; z-index:3; }
+  .service{ background:#12121c; border:1px solid #222; border-radius:20px; padding:18px 10px; text-align:center; cursor:pointer !important; position:relative; overflow:hidden; -webkit-tap-highlight-color:transparent; touch-action:manipulation; user-select:none; }
+  .service:active{ transform:scale(0.96); background:#1a1033; border-color:#6a00ff; }
+  .service-icon{ width:56px; height:56px; margin:0 auto; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:28px; pointer-events:none; }
+  .service h4{ font-size:13px; margin-top:10px; pointer-events:none; }
+  .service p{ font-size:11px; color:#aaa; margin-top:3px; pointer-events:none; }
+  .badge{ position:absolute; top:8px; right:8px; background:#fff; color:#000; font-size:9px; font-weight:800; padding:3px 6px; border-radius:20px; pointer-events:none; }
   .bg-flight{ background:linear-gradient(135deg,#3b82f6,#06b6d4); }
   .bg-train{ background:linear-gradient(135deg,#ef4444,#f97316); }
   .bg-gift{ background:linear-gradient(135deg,#f59e0b,#facc15); }
   .bg-crypto{ background:linear-gradient(135deg,#f59e0b,#111); }
   .bg-send{ background:linear-gradient(135deg,#10b981,#059669); }
   .bg-receive{ background:linear-gradient(135deg,#8b5cf6,#ec4899); }
-
-  /* WALLET CARD - PREMIUM */
   .wallet-card{ margin:20px; background:linear-gradient(135deg,#000,#1a1033,#6a00ff); border:1px solid #333; border-radius:22px; padding:20px; position:relative; z-index:1; overflow:hidden; }
-  .wallet-card::before{ content:"STONEAI"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-20deg); font-size:48px; font-weight:900; color:rgba(255,255,255,0.05); }
+  .wallet-card::before{ content:"STONEAI"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-20deg); font-size:48px; font-weight:900; color:rgba(255,255,255,0.05); pointer-events:none; }
   .wallet-top{ display:flex; justify-content:space-between; position:relative; z-index:1; }
   .wallet-id-box{ background:#fff; color:#000; padding:8px 12px; border-radius:10px; font-weight:800; font-size:12px; margin-top:12px; display:inline-block; position:relative; z-index:1; }
   .qr-img{ width:110px; height:110px; background:#fff; border-radius:12px; padding:6px; }
-
-  /* BOOKING FORM - BILLPOINT STYLE */
   .booking{ margin:0 20px 20px; background:#fff; color:#000; border-radius:22px; padding:20px; position:relative; z-index:1; }
   .booking h3{ font-size:17px; }
   .booking p{ font-size:12px; color:#666; margin:4px 0 12px; }
@@ -70,16 +60,15 @@
   .tab{ padding:9px 14px; border-radius:20px; background:#f1f1f1; font-size:12px; font-weight:800; white-space:nowrap; cursor:pointer; border:1px solid #eee; }
   .tab.active{ background:#000; color:#fff; }
   input,select{ width:100%; padding:13px; margin:7px 0; border-radius:12px; border:1px solid #ddd; background:#f9f9f9; color:#000; font-size:14px; outline:none; }
-  .pay-btn{ background:#000; color:#fff; border:none; padding:15px; width:100%; border-radius:14px; font-weight:800; font-size:15px; margin-top:8px; }
-  .pay-btn-purple{ background:linear-gradient(90deg,#6a00ff,#00d4ff); color:#fff; border:none; padding:15px; width:100%; border-radius:14px; font-weight:800; font-size:15px; margin-top:8px; }
+  .pay-btn{ background:#000; color:#fff; border:none; padding:15px; width:100%; border-radius:14px; font-weight:800; font-size:15px; margin-top:8px; cursor:pointer; }
+  .pay-btn-purple{ background:linear-gradient(90deg,#6a00ff,#00d4ff); color:#fff; border:none; padding:15px; width:100%; border-radius:14px; font-weight:800; font-size:15px; margin-top:8px; cursor:pointer; }
   .history-item{ background:#f9f9f9; border-left:4px solid #6a00ff; padding:12px; margin:8px 0; border-radius:10px; font-size:13px; display:flex; justify-content:space-between; color:#000; }
-
-  /* FOLDER MODAL */
-  .folder-modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050508; z-index:1000; overflow-y:auto; padding:20px; }
+  .folder-modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050508; z-index:5000; overflow-y:auto; padding:20px; }
   .folder-header{ display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid #222; }
-  .close-btn{ background:#fff; color:#000; border:none; width:36px; height:36px; border-radius:50%; font-size:18px; font-weight:800; }
-  #lockModal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); z-index:2000; text-align:center; padding-top:50px; }
+  .close-btn{ background:#fff; color:#000; border:none; width:36px; height:36px; border-radius:50%; font-size:18px; font-weight:800; cursor:pointer; }
+  #lockModal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.96); z-index:6000; text-align:center; padding-top:50px; }
   .lock-box{ background:#111; border:1px solid #444; margin:20px; padding:28px; border-radius:24px; }
+  .action-btn{ flex:1; padding:11px; border-radius:12px; font-weight:800; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -87,14 +76,12 @@
 <div class="watermark">STONEAI</div>
 <div class="watermark2">STONEAI • PREMIUM</div>
 
-<!-- BILLPOINT TOP NAV -->
 <div class="topnav">
   <div class="logo">🪨 <span>STONEAI</span></div>
   <div class="nav-links"><span class="active">Home</span><span onclick="openFolder('History')">Bills</span><span onclick="openFolder('Send')">Wallet</span></div>
   <button class="login-btn" onclick="openFolder('Receive')">Login</button>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <span class="hero-badge">● PREMIUM • AI MONITORED • SECURE</span>
   <h1>Pay Bills, Book<br>Travel & Send Money<br>in Seconds</h1>
@@ -110,18 +97,16 @@
   </div>
 </div>
 
-<!-- QUICK SERVICES -->
-<div class="section-title"><h3>Quick Services</h3><span>View All →</span></div>
+<div class="section-title"><h3>Quick Services</h3><span>Tap any icon to open →</span></div>
 <div class="services-grid">
-  <div class="service" id="card-Flight" onclick="selectService('Flight')"><span class="badge">POPULAR</span><div class="service-icon bg-flight">✈️</div><h4>Flight</h4><p>Book flights</p></div>
-  <div class="service" id="card-Train" onclick="selectService('Train')"><div class="service-icon bg-train">🚆</div><h4>Train</h4><p>Train tickets</p></div>
-  <div class="service" id="card-Gift Cards" onclick="selectService('Gift Cards')"><span class="badge">NEW</span><div class="service-icon bg-gift">🎁</div><h4>Gift Cards</h4><p>Amazon, Apple</p></div>
-  <div class="service" id="card-Crypto" onclick="selectService('Crypto')"><div class="service-icon bg-crypto">₿</div><h4>Crypto</h4><p>BTC, USDT</p></div>
-  <div class="service" id="card-Send" onclick="selectService('Send')"><div class="service-icon bg-send">💸</div><h4>Send</h4><p>Send money</p></div>
-  <div class="service" id="card-Receive" onclick="selectService('Receive')"><div class="service-icon bg-receive">💰</div><h4>Receive</h4><p>Receive funds</p></div>
+  <div class="service" onclick="openFolder('Flight')"><span class="badge">POPULAR</span><div class="service-icon bg-flight">✈️</div><h4>Flight</h4><p>Book flights</p></div>
+  <div class="service" onclick="openFolder('Train')"><div class="service-icon bg-train">🚆</div><h4>Train</h4><p>Train tickets</p></div>
+  <div class="service" onclick="openFolder('Gift Cards')"><span class="badge">NEW</span><div class="service-icon bg-gift">🎁</div><h4>Gift Cards</h4><p>Amazon, Apple</p></div>
+  <div class="service" onclick="openFolder('Crypto')"><div class="service-icon bg-crypto">₿</div><h4>Crypto</h4><p>BTC, USDT</p></div>
+  <div class="service" onclick="openFolder('Send')"><div class="service-icon bg-send">💸</div><h4>Send</h4><p>Send money</p></div>
+  <div class="service" onclick="openFolder('Receive')"><div class="service-icon bg-receive">💰</div><h4>Receive</h4><p>Receive funds</p></div>
 </div>
 
-<!-- WALLET + QR -->
 <div class="wallet-card">
   <div class="wallet-top">
     <div>
@@ -133,12 +118,11 @@
     <img id="qrImage" class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=STONEAI-000000" alt="QR">
   </div>
   <div style="display:flex; gap:8px; margin-top:14px; position:relative; z-index:1;">
-    <button onclick="createWallet()" style="flex:1; background:#fff; color:#000; border:none; padding:11px; border-radius:12px; font-weight:800;">Generate ID</button>
-    <button onclick="copyWalletId()" style="flex:1; background:rgba(255,255,255,0.15); color:#fff; border:1px solid #fff; padding:11px; border-radius:12px; font-weight:800;">Copy ID</button>
+    <button onclick="createWallet()" style="flex:1; background:#fff; color:#000; border:none; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">Generate ID</button>
+    <button onclick="copyWalletId()" style="flex:1; background:rgba(255,255,255,0.15); color:#fff; border:1px solid #fff; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">Copy ID</button>
   </div>
 </div>
 
-<!-- BOOKING / BILL FORM -->
 <div class="booking" id="bookingSection">
   <h3 id="bookingTitle">✈️ Flight Booking</h3>
   <p id="bookingDesc">Book local and international flights. AI will verify your Face / Fingerprint before payment.</p>
@@ -163,13 +147,12 @@
   <p style="text-align:center; font-size:11px; color:#888; margin-top:8px;">Secured by StoneAI AI Monitoring • Face & Fingerprint Lock</p>
 </div>
 
-<!-- HISTORY INSIDE SEND / RECEIVE / HISTORY -->
 <div class="section-title"><h3>Recent Transactions</h3><span onclick="openFolder('History')">See All →</span></div>
 <div style="padding:0 20px; position:relative; z-index:1;">
   <div style="display:flex; gap:8px; margin-bottom:12px;">
-    <button onclick="openFolder('Send')" style="flex:1; background:#12121c; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800;">💸 Send Folder</button>
-    <button onclick="openFolder('Receive')" style="flex:1; background:#12121c; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800;">💰 Receive Folder</button>
-    <button onclick="openFolder('History')" style="flex:1; background:#fff; color:#000; border:none; padding:11px; border-radius:12px; font-weight:800;">📜 History</button>
+    <button class="action-btn" onclick="openFolder('Send')" style="background:#12121c; color:#fff; border:1px solid #333;">💸 Send</button>
+    <button class="action-btn" onclick="openFolder('Receive')" style="background:#12121c; color:#fff; border:1px solid #333;">💰 Receive</button>
+    <button class="action-btn" onclick="openFolder('History')" style="background:#fff; color:#000; border:none;">📜 History</button>
   </div>
   <div class="booking" style="margin:0;">
     <div class="history-item"><span>✈️ Flight - Lagos to Abuja<br><small style="color:#888;">Nov 26 - Paid</small></span><b>₦25,000</b></div>
@@ -181,13 +164,12 @@
 </div>
 <div style="height:30px;"></div>
 
-<!-- FOLDER MODAL -->
 <div id="folderModal" class="folder-modal">
   <div class="folder-header"><h2 id="folderTitle">📁 Folder</h2><button class="close-btn" onclick="closeFolder()">X</button></div>
   <div style="display:flex; gap:8px; margin:16px 0;">
-    <button onclick="openFolder('Send')" style="flex:1; background:#111; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800;">Send</button>
-    <button onclick="openFolder('Receive')" style="flex:1; background:#111; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800;">Receive</button>
-    <button onclick="openFolder('History')" style="flex:1; background:#fff; color:#000; padding:11px; border-radius:12px; font-weight:800;">History</button>
+    <button onclick="openFolder('Send')" style="flex:1; background:#111; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">Send</button>
+    <button onclick="openFolder('Receive')" style="flex:1; background:#111; color:#fff; border:1px solid #333; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">Receive</button>
+    <button onclick="openFolder('History')" style="flex:1; background:#fff; color:#000; padding:11px; border-radius:12px; font-weight:800; cursor:pointer;">History</button>
   </div>
   <div id="folderContent"></div>
   <div class="booking" style="margin:16px 0;">
@@ -198,7 +180,6 @@
   </div>
 </div>
 
-<!-- LOCK MODAL -->
 <div id="lockModal">
   <div class="lock-box">
     <h2>Security Lock</h2><p>Approve this transaction</p>
@@ -206,7 +187,7 @@
     <div style="font-size:65px;">👆</div><p>Fingerprint</p>
     <p id="aiLockText" style="font-size:12px;">AI Monitoring: Checking...</p>
     <button class="pay-btn" onclick="approveAndPay()">Approve with Face / Fingerprint</button>
-    <br><br><button onclick="closeLock()" style="background:none; border:none; color:#fff;">Cancel</button>
+    <br><br><button onclick="closeLock()" style="background:none; border:none; color:#fff; cursor:pointer;">Cancel</button>
   </div>
 </div>
 
@@ -233,27 +214,9 @@ const allTransactions = {
   ]
 };
 function selectService(service){
-  document.querySelectorAll('.service').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  let card = document.getElementById('card-'+service);
-  if(card) card.classList.add('active');
   document.getElementById('product').value = service;
-  let titles = {
-    'Flight':'✈️ Flight Booking',
-    'Train':'🚆 Train Booking',
-    'Gift Cards':'🎁 Gift Cards',
-    'Crypto':'₿ Crypto Wallet',
-    'Send':'💸 Send Money',
-    'Receive':'💰 Receive Money'
-  };
-  let descs = {
-    'Flight':'Book local and international flights.',
-    'Train':'Book fast train tickets across Nigeria.',
-    'Gift Cards':'Buy Amazon, Apple, Steam gift cards instantly.',
-    'Crypto':'Buy Bitcoin, USDT and other crypto.',
-    'Send':'Send money to any bank instantly.',
-    'Receive':'Receive money with your Wallet ID or QR Code.'
-  };
+  let titles = {'Flight':'✈️ Flight Booking','Train':'🚆 Train Booking','Gift Cards':'🎁 Gift Cards','Crypto':'₿ Crypto Wallet','Send':'💸 Send Money','Receive':'💰 Receive Money'};
+  let descs = {'Flight':'Book local and international flights.','Train':'Book fast train tickets across Nigeria.','Gift Cards':'Buy Amazon, Apple, Steam gift cards instantly.','Crypto':'Buy Bitcoin, USDT and other crypto.','Send':'Send money to any bank instantly.','Receive':'Receive money with your Wallet ID or QR Code.'};
   document.getElementById('bookingTitle').innerText = titles[service] || service;
   document.getElementById('bookingDesc').innerText = descs[service] || '';
   let dyn = document.getElementById('dynamicFields');
@@ -267,21 +230,42 @@ function selectService(service){
   document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'});
 }
 function openFolder(folder){
-  document.getElementById('folderModal').style.display='block';
-  document.getElementById('folderTitle').innerText='📁 '+folder+' Folder';
-  document.getElementById('folderProduct').value=folder;
-  let list = allTransactions[folder] || allTransactions.History;
-  let header = folder==='Send' ? 'All Sent Transactions are inside this folder' : folder==='Receive' ? 'All Received Funds are inside this folder' : 'All Transactions are inside this folder';
-  let html = '<p style="color:#aaa; font-size:13px; margin-bottom:12px;">'+header+'</p>';
-  list.forEach(t=>{ html += '<div class="history-item"><span>'+t.title+'<br><small style="color:#888;">'+t.date+' - '+t.status+'</small></span><b>'+t.amount+'</b></div>'; });
+  console.log('Opening folder:', folder);
+  var modal = document.getElementById('folderModal');
+  modal.style.display = 'block';
+  document.getElementById('folderTitle').innerText = '📁 ' + folder;
+  document.getElementById('folderProduct').value = folder;
+  var list = allTransactions[folder] || allTransactions.History;
+  var header = folder==='Send' ? 'All Sent Transactions are inside this folder' : folder==='Receive' ? 'All Received Funds are inside this folder' : folder==='History' ? 'All Transactions are inside this folder' : 'All ' + folder + ' transactions are inside this folder. Tap Pay to make a new one.';
+  var html = '<p style="color:#aaa; font-size:13px; margin-bottom:12px;">'+header+'</p>';
+  list.forEach(function(t){ html += '<div class="history-item"><span>'+t.title+'<br><small style="color:#888;">'+t.date+' - '+t.status+'</small></span><b>'+t.amount+'</b></div>'; });
   document.getElementById('folderContent').innerHTML = html;
+  // Also update booking form so user sees it changed
+  selectService(folder);
+  window.scrollTo(0,0);
 }
 function closeFolder(){ document.getElementById('folderModal').style.display='none'; }
-function payFromFolder(){ let p=document.getElementById('folderProduct').value; let a=document.getElementById('folderAmount').value; if(!a){ alert('Please enter amount'); return; } document.getElementById('product').value=p; document.getElementById('amount').value=a; closeFolder(); openLock(); }
-function searchService(){ let q=document.getElementById('searchInput').value; if(q) selectService(q); }
+function payFromFolder(){ var p=document.getElementById('folderProduct').value; var a=document.getElementById('folderAmount').value; if(!a){ alert('Please enter amount'); return; } document.getElementById('product').value=p; document.getElementById('amount').value=a; closeFolder(); openLock(); }
+function searchService(){ var q=document.getElementById('searchInput').value; if(q) openFolder(q); }
 function createWallet(){ currentWalletId='STONEAI-'+Math.floor(100000+Math.random()*900000); document.getElementById('walletIdDisplay').innerText=currentWalletId; document.getElementById('qrImage').src='https://api.qrserver.com/v1/create-qr-code/?size=110x110&data='+currentWalletId; }
 function copyWalletId(){ navigator.clipboard.writeText(currentWalletId); alert('Wallet ID copied: '+currentWalletId); }
-function openLock(){ let name=document.getElementById('name').value; let email=document.getElementById('email').value; let product=document.getElementById('product').value; let amount=document.getElementById('amount').value; if(!name||!email||!product||!amount){ alert('Please fill in Name, Email, Service and Amount first'); return; } document.getElementById('lockModal').style.display='block'; document.getElementById('aiLockText').innerHTML='AI Monitoring: Scanning Face / Fingerprint...'; setTimeout(()=>{ document.getElementById('aiLockText').innerHTML='AI Monitoring: Identity Verified - Safe'; },1000); }
+function openLock(){ var name=document.getElementById('name').value; var email=document.getElementById('email').value; var product=document.getElementById('product').value; var amount=document.getElementById('amount').value; if(!name||!email||!product||!amount){ alert('Please fill in Name, Email, Service and Amount first'); return; } document.getElementById('lockModal').style.display='block'; document.getElementById('aiLockText').innerHTML='AI Monitoring: Scanning Face / Fingerprint...'; setTimeout(function(){ document.getElementById('aiLockText').innerHTML='AI Monitoring: Identity Verified - Safe'; },1000); }
 function closeLock(){ document.getElementById('lockModal').style.display='none'; }
 function approveAndPay(){ closeLock(); alert('Face / Fingerprint Verified - AI Approved - Now opening Paystack...'); payWithPaystack(); }
-function payWithPaystack(){ let email=document.getElementById('email').value; let product=document.getElementById('product').value; let amount=document.getElementById('amount').value; let name=document.getElementById('name').value; let handler=PaystackPop.setup({ key:PAYSTACK_KEY, email:email, amount:amount*100, currency:'NGN', ref:'STONEAI-'+Math.floor(Math.random()*1000000000), metadata:{ custom_fields:[{display_name:"Service", variable_name:"service", value:product},{display_name:"Customer", variable_name:"customer", value:name}]}, onClose:function(){ alert('Payment cancelled'); }, callback:function(response){ alert('Payment Successful! Reference: '+response.reference
+function payWithPaystack(){ var email=document.getElementById('email').value; var product=document.getElementById('product').value; var amount=document.getElementById('amount').value; var name=document.getElementById('name').value; var handler=PaystackPop.setup({ key:PAYSTACK_KEY, email:email, amount:amount*100, currency:'NGN', ref:'STONEAI-'+Math.floor(Math.random()*1000000000), metadata:{ custom_fields:[{display_name:"Service", variable_name:"service", value:product},{display_name:"Customer", variable_name:"customer", value:name}]}, onClose:function(){ alert('Payment cancelled'); }, callback:function(response){ alert('Payment Successful! Reference: '+response.reference); } }); handler.openIframe(); }
+// Safety: make sure every .service is clickable even if HTML onclick fails
+document.addEventListener('DOMContentLoaded', function(){
+  createWallet();
+  selectService('Flight');
+  var services = document.querySelectorAll('.service');
+  services.forEach(function(el){
+    el.addEventListener('click', function(){
+      var title = el.querySelector('h4').innerText;
+      var map = {'Flight':'Flight','Train':'Train','Gift Cards':'Gift Cards','Crypto':'Crypto','Send':'Send','Receive':'Receive'};
+      if(map[title]) openFolder(map[title]);
+    });
+  });
+});
+</script>
+</body>
+</html>
